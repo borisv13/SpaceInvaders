@@ -1,12 +1,21 @@
 
-public class SpaceInvaders {
+public class SpaceInvaders implements Runnable {
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		System.out.println("h");
+		SpaceInvaders spaceInvaders = new SpaceInvaders();
+		spaceInvaders.init();
+	}
+
+	void init() {
+		new GameFrame();
+	}
+	
+	@Override
+	public void run() {
+		System.out.println("hello");
 	}
 
 }
