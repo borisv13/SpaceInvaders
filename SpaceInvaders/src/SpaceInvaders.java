@@ -11,6 +11,7 @@ public class SpaceInvaders implements Runnable {
 
 	void init() {
 		new GameFrame();
+		new ImageHandler();
 	}
 	
 	@Override
