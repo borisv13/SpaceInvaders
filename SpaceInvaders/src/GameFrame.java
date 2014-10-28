@@ -11,6 +11,7 @@ public class GameFrame extends Frame {
 		setSize(getMaximizedBounds().getSize());
 		setResizable(false);
 		addWindowClosingListener();
+		this.add(new GamePanel(this.getWidth(), this.getHeight()));
 		setVisible(true);
 	}
 	
