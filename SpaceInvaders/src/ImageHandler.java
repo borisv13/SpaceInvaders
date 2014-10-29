@@ -9,11 +9,13 @@ public class ImageHandler {
 	
 	private static final String RELATIVE_PATH = "./resources/images/";
 	
-	BufferedImage ship;
+	private BufferedImage ship;
+	private BufferedImage background;
 	
 	ImageHandler() {
 		try {
 			ship = ImageIO.read(new File(RELATIVE_PATH.concat(ImageNames.SHIP)));
+			background = ImageIO.read(new File(RELATIVE_PATH.concat(ImageNames.BACKGROUND)));
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(0);
@@ -22,5 +24,9 @@ public class ImageHandler {
 	
 	BufferedImage getShip() {
 		return ship;
+	}
+	
+	BufferedImage getBackground() {
+		return background;
 	}
 }
