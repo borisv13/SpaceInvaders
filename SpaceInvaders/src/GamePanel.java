@@ -1,9 +1,11 @@
 import java.awt.Cursor;
+import java.awt.Event;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Panel;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.awt.image.MemoryImageSource;
 
 
@@ -29,6 +31,7 @@ public class GamePanel extends Panel {
 	
 	public void paint(Graphics g) {
 		super.paint(g);
+		requestFocusInWindow();
 		background.move();
 		g.drawImage(background.getImage(), background.getX(), background.getY(), this);
 		int secondBackgroundHeight = background.getY() + background.getImage().getHeight() -1;
@@ -48,5 +51,15 @@ public class GamePanel extends Panel {
 		dbg.setColor(getForeground());
 		paint(dbg);
 		g.drawImage(dbImage, 0, 0, this);
+	}
+	
+	public boolean keyDown(Event evt, int key) {
+		if (key == Event.LEFT) {
+			ship.moveLeft();
+		} else if (key == Event.RIGHT) {
+			ship.moveRight();
+		}
+			
+		return true;
 	}
 }
