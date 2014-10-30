@@ -15,8 +15,7 @@ public class Background {
 	
 	public void move() {
 		y--;
-		//TODO refactor
-		if(y < -100)
+		if(y < -this.image.getHeight())
 			y = 0;
 	}
 	

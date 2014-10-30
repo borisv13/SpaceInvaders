@@ -28,6 +28,8 @@ public class GamePanel extends Panel {
 		super.paint(g);
 		background.move();
 		g.drawImage(background.getImage(), background.getX(), background.getY(), this);
+		int secondBackgroundHeight = background.getY() + background.getImage().getHeight() -1;
+		g.drawImage(background.getImage(), background.getX(), secondBackgroundHeight, this);
 	}
 	
 	public void update (Graphics g)
