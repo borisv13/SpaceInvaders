@@ -2,32 +2,15 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 
-public class Background {
-
-	private int x, y;
-	private BufferedImage image;
+public class Background extends DualCoordinateImage {
 	
 	Background(BufferedImage image, int x, int y) {
-		this.image = image;
-		this.x = x;
-		this.y = y;
+		super(image, x, y);
 	}
 	
 	public void move() {
 		y--;
-		if(y < -this.image.getHeight())
+		if(y < -image.getHeight())
 			y = 0;
-	}
-	
-	public BufferedImage getImage() {
-		return image;
-	}
-	
-	public int getX() {
-		return x;
-	}
-	
-	public int getY() {
-		return y;
 	}
 }

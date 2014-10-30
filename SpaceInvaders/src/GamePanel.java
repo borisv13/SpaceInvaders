@@ -10,12 +10,15 @@ import java.awt.image.MemoryImageSource;
 public class GamePanel extends Panel {
 
 	private Background background;
+	private Ship ship;
 	private Image dbImage;
 	
 	GamePanel(int width, int height) {
 		this.setCursor(getTransparentCursor());
 		this.setSize(width, height);
 		background = Factory.createBackground(0, 0);
+		ship = Factory.createShip(width/2, 0);
+		ship.setY(height - ship.getImage().getHeight()*2);
 		repaint();
 	}
 	
@@ -30,6 +33,7 @@ public class GamePanel extends Panel {
 		g.drawImage(background.getImage(), background.getX(), background.getY(), this);
 		int secondBackgroundHeight = background.getY() + background.getImage().getHeight() -1;
 		g.drawImage(background.getImage(), background.getX(), secondBackgroundHeight, this);
+		g.drawImage(ship.getImage(), ship.getX(), ship.getY(), this);
 	}
 	
 	public void update (Graphics g)
