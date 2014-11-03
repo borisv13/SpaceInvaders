@@ -4,12 +4,12 @@ import java.awt.image.BufferedImage;
 
 public class Background extends DualCoordinateImage {
 	
-	Background(BufferedImage image, int x, int y) {
-		super(image, x, y);
+	Background(BufferedImage image, int initialX, int initialY) {
+		super(image, initialX, initialY);
 	}
 	
 	public void move() {
-		y--;
+		y -= TunableParameters.BackgroundSpeed;
 		if(y < -image.getHeight())
 			y = 0;
 	}

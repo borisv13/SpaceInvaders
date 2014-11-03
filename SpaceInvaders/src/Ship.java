@@ -8,10 +8,10 @@ public class Ship extends DualCoordinateImage{
 	}
 	
 	public void moveLeft() {
-		x--;
+		x -= TunableParameters.ShipSpeed;
 	}
 	
 	public void moveRight() {
-		x++;
+		x += TunableParameters.ShipSpeed;
 	}
 }
