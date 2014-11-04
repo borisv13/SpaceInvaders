@@ -10,4 +10,8 @@ public class Factory {
 	static public Ship createShip(int x, int y) {
 		return new Ship(imageHandler.getShip(), x, y);
 	}
+
+	static public Alien createAlien(int x, int y) {
+		return new Alien(imageHandler.getAlien(), x, y);
+	}
 }

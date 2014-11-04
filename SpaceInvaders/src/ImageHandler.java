@@ -11,11 +11,13 @@ public class ImageHandler {
 	
 	private BufferedImage ship;
 	private BufferedImage background;
+	private BufferedImage alien;
 	
 	ImageHandler() {
 		try {
 			ship = ImageIO.read(new File(RELATIVE_PATH.concat(ImageNames.SHIP)));
 			background = ImageIO.read(new File(RELATIVE_PATH.concat(ImageNames.BACKGROUND)));
+			alien = ImageIO.read(new File(RELATIVE_PATH.concat(ImageNames.ALIEN)));
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(0);
@@ -28,5 +30,9 @@ public class ImageHandler {
 	
 	BufferedImage getBackground() {
 		return background;
+	}
+
+	BufferedImage getAlien() {
+		return alien;
 	}
 }

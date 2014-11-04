@@ -13,6 +13,7 @@ public class GamePanel extends Panel {
 
 	private Background background;
 	private Ship ship;
+	private Alien alien;
 	private Image dbImage;
 	
 	GamePanel(int width, int height) {
@@ -21,6 +22,9 @@ public class GamePanel extends Panel {
 		background = Factory.createBackground(0, 0);
 		ship = Factory.createShip(width/2, 0);
 		ship.setY(height - ship.getImage().getHeight()*2);
+		alien = Factory.createAlien(0, 0);
+		alien.setScreenWidth(width);
+		
 		repaint();
 	}
 	
@@ -37,6 +41,8 @@ public class GamePanel extends Panel {
 		int secondBackgroundHeight = background.getY() + background.getImage().getHeight() -1;
 		g.drawImage(background.getImage(), background.getX(), secondBackgroundHeight, this);
 		g.drawImage(ship.getImage(), ship.getX(), ship.getY(), this);
+		alien.move();
+		g.drawImage(alien.getImage(), alien.getX(), alien.getY(), this);
 	}
 	
 	public void update (Graphics g)
