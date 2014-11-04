@@ -20,15 +20,18 @@ public class Alien extends DualCoordinateImage{
 	}
 	
 	public void move() {		
-		if ((x + this.imageWidth + 1 > this.screenWidth) && (this.movingRight)) {
-			this.moveDown();
-			this.movingRight = false;
-		} else if ((x - this.imageWidth - 1 < 0) && (!this.movingRight)) {
-			this.moveDown();
-			this.movingRight = true;
-		} else {
-			if (movingRight) {
+		if (this.movingRight) {
+			if (x + this.imageWidth + 1 > this.screenWidth) {
+				this.moveDown();
+				this.movingRight = false;
+			}
+			else {
 				this.moveRight();
+			}				
+		} else {
+			if (x - 1 < 0) {		
+				this.moveDown();
+				this.movingRight = true;
 			} else {
 				this.moveLeft();
 			}

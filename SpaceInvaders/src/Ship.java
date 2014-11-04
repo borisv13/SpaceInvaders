@@ -14,4 +14,10 @@ public class Ship extends DualCoordinateImage{
 	public void moveRight() {
 		x += TunableParameters.ShipSpeed;
 	}
+	
+	public Missile fireMissile() {
+		Missile newMissile = Factory.createMissile(this.getX(), 0);
+		newMissile.setY(this.getY() - newMissile.getImage().getHeight());
+		return newMissile;
+	}
 }

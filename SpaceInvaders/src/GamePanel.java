@@ -7,6 +7,7 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.image.MemoryImageSource;
+import java.util.ArrayList;
 
 
 public class GamePanel extends Panel {
@@ -15,6 +16,7 @@ public class GamePanel extends Panel {
 	private Ship ship;
 	private Alien alien;
 	private Image dbImage;
+	private ArrayList<Missile> missiles = new ArrayList<Missile>(10);
 	
 	GamePanel(int width, int height) {
 		this.setCursor(getTransparentCursor());
@@ -37,12 +39,19 @@ public class GamePanel extends Panel {
 		super.paint(g);
 		requestFocusInWindow();
 		background.move();
+		alien.move();
+		for(Missile missile : this.missiles) {
+			missile.move();
+		}
+		
 		g.drawImage(background.getImage(), background.getX(), background.getY(), this);
 		int secondBackgroundHeight = background.getY() + background.getImage().getHeight() -1;
 		g.drawImage(background.getImage(), background.getX(), secondBackgroundHeight, this);
-		g.drawImage(ship.getImage(), ship.getX(), ship.getY(), this);
-		alien.move();
+		g.drawImage(ship.getImage(), ship.getX(), ship.getY(), this);	
 		g.drawImage(alien.getImage(), alien.getX(), alien.getY(), this);
+		for(Missile missile : this.missiles) {
+			g.drawImage(missile.getImage(), missile.getX(), missile.getY(), this);
+		}		
 	}
 	
 	public void update (Graphics g)
@@ -64,6 +73,8 @@ public class GamePanel extends Panel {
 			ship.moveLeft();
 		} else if (key == Event.RIGHT) {
 			ship.moveRight();
+		} else if (key == Event.UP) {
+			this.missiles.add(ship.fireMissile());
 		}
 			
 		return true;
