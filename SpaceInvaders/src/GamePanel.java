@@ -5,7 +5,6 @@ import java.awt.Image;
 import java.awt.Panel;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
 import java.awt.image.MemoryImageSource;
 import java.util.ArrayList;
 

@@ -19,7 +19,7 @@ public class ImageHandler {
 			ship = ImageIO.read(new File(RELATIVE_PATH.concat(ImageNames.SHIP)));
 			background = ImageIO.read(new File(RELATIVE_PATH.concat(ImageNames.BACKGROUND)));
 			alien = ImageIO.read(new File(RELATIVE_PATH.concat(ImageNames.ALIEN)));
-			missile = ImageIO.read(new File(RELATIVE_PATH.concat(ImageNames.MISSILE)));
+			missile = ImageIO.read(new File(RELATIVE_PATH.concat(ImageNames.SHIP_MISSILE)));
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(0);

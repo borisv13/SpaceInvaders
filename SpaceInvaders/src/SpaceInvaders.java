@@ -28,5 +28,4 @@ public class SpaceInvaders implements Runnable {
 			gameFrame.repaint();
 		}
 	}
-
 }
