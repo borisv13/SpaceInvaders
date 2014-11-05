@@ -12,6 +12,7 @@ public class GameFrame extends Frame {
 	GameFrame() {
 		setMaximizedBounds(getMaximumWindowBounds());
 		setSize(getMaximizedBounds().getSize());
+		TunableParameters.SetReferenceSpeed(this.getWidth()/800);
 		setResizable(false);
 		addWindowClosingListener();
 		gamePanel = new GamePanel(this.getWidth(), this.getHeight());
