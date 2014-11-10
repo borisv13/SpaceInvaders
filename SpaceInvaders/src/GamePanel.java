@@ -30,33 +30,10 @@ public class GamePanel extends Panel {
 		super.paint(g);
 		requestFocusInWindow();
 		game.run();
-		drawBackground(g);
-		drawAlien(g);
-		drawShip(g);
-		drawMissiles(g);
-	}
-	
-	public void drawMissiles(Graphics g) {
-		for(Missile missile : game.getShipMissiles()) {
-			g.drawImage(missile.getImage(), missile.getX(), missile.getY(), this);
-		}
-	}
-	
-	public void drawBackground(Graphics g) {
-		Background background = game.getBackground();
-		g.drawImage(background.getImage(), background.getX(), background.getY(), this);
-		int secondBackgroundHeight = background.getY() + background.getImage().getHeight() -1;
-		g.drawImage(background.getImage(), background.getX(), secondBackgroundHeight, this);
-	}
-	
-	public void drawShip(Graphics g) {
-		Ship ship = game.getShip();
-		g.drawImage(ship.getImage(), ship.getX(), ship.getY(), this);
-	}
-	
-	public void drawAlien(Graphics g) {
-		Alien alien = game.getAlien();
-		g.drawImage(alien.getImage(), alien.getX(), alien.getY(), this);
+		Painter.drawBackground(g, game.getBackground(), this);
+		Painter.drawAlien(g, game.getAlien(), this);
+		Painter.drawShip(g, game.getShip(), this);
+		Painter.drawMissiles(g, game.getShipMissiles(), this);
 	}
 	
 	public void update (Graphics g)
