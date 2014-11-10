@@ -40,7 +40,7 @@ public class Game {
 		ship.moveRight();
 	}
 	
-	void keyUp() {
+	void keySpace() {
 		this.shipMissiles.add(ship.fireMissile());
 	}
 	
