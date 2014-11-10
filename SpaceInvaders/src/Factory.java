@@ -15,7 +15,7 @@ public class Factory {
 		return new Alien(imageHandler.getAlien(), x, y);
 	}
 
-	static public Missile createMissile(int x, int y) {
-		return new Missile(imageHandler.getMissile(), x, y);
+	static public Missile createShipMissile(int x, int y) {
+		return new ShipMissile(imageHandler.getMissile(), x, y);
 	}
 }
