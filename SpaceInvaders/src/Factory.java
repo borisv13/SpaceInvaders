@@ -18,4 +18,8 @@ public class Factory {
 	static public Missile createShipMissile(int x, int y) {
 		return new ShipMissile(imageHandler.getMissile(), x, y);
 	}
+	
+	static public Missile createAlienMissile(int x, int y) {
+		return new AlienMissile(imageHandler.getMissile(), x, y);
+	}
 }

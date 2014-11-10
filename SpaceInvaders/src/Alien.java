@@ -19,7 +19,7 @@ public class Alien extends DualCoordinateImage{
 		this.screenWidth = width;
 	}
 	
-	public void move() {		
+	public void move() {
 		if (this.movingRight) {
 			if (x + this.imageWidth + 1 > this.screenWidth) {
 				this.moveDown();
@@ -50,4 +50,10 @@ public class Alien extends DualCoordinateImage{
 		x -= TunableParameters.AlienSpeed;
 	}
 	
+	public Missile fireMissile() {
+		Missile newMissile = Factory.createAlienMissile(0, 0);
+		newMissile.setX(newMissile.getCenterRelativeXCoordinate(getX(), getImage().getWidth()));
+		newMissile.setY(this.getY() + newMissile.getImage().getHeight());
+		return newMissile;
+	}
 }

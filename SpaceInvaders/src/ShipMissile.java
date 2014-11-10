@@ -8,6 +8,6 @@ public class ShipMissile extends Missile {
 	}
 	
 	public void move() {
-		y -= getImage().getHeight() / 3; //TODO move 3 to a tunable parameter?
+		y -= getImage().getHeight() / TunableParameters.MissileSpeed;
 	}
 }

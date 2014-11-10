@@ -34,6 +34,7 @@ public class GamePanel extends Panel {
 		Painter.drawAlien(g, game.getAlien(), this);
 		Painter.drawShip(g, game.getShip(), this);
 		Painter.drawMissiles(g, game.getShipMissiles(), this);
+		Painter.drawMissiles(g, game.getAlienMissiles(), this);
 	}
 	
 	public void update (Graphics g)

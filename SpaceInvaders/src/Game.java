@@ -7,6 +7,7 @@ public class Game {
 	private Ship ship;
 	private Alien alien;
 	private ArrayList<Missile> shipMissiles = new ArrayList<Missile>();
+	private ArrayList<Missile> alienMissiles = new ArrayList<Missile>();
 	
 	Game(int width, int height) {
 		background = Factory.createBackground(0, 0);
@@ -31,6 +32,10 @@ public class Game {
 	public List<Missile> getShipMissiles() {
 		return shipMissiles;
 	}
+	
+	public List<Missile> getAlienMissiles() {
+		return alienMissiles;
+	}
 
 	void keyLeft() {
 		ship.moveLeft();
@@ -47,8 +52,14 @@ public class Game {
 	void run() {
 		background.move();
 		alien.move();
+		for(Missile missile : alienMissiles) {
+			missile.move();
+		}
+		alienMissiles.add(alien.fireMissile());
+		
 		for(Missile missile : shipMissiles) {
 			missile.move();
 		}
+		
 	}
 }
