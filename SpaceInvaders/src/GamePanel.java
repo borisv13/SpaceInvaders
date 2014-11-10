@@ -11,21 +11,14 @@ import java.util.ArrayList;
 
 public class GamePanel extends Panel {
 
-	private Background background;
-	private Ship ship;
-	private Alien alien;
 	private Image dbImage;
 	private ArrayList<Missile> missiles = new ArrayList<Missile>(10);
+	private Game game;
 	
 	GamePanel(int width, int height) {
 		this.setCursor(getTransparentCursor());
 		this.setSize(width, height);
-		background = Factory.createBackground(0, 0);
-		ship = Factory.createShip(width/2, 0);
-		ship.setY(height - ship.getImage().getHeight()*2);
-		alien = Factory.createAlien(0, 0);
-		alien.setScreenWidth(width);
-		
+		game = new Game(width, height);
 		repaint();
 	}
 	
@@ -37,20 +30,36 @@ public class GamePanel extends Panel {
 	public void paint(Graphics g) {
 		super.paint(g);
 		requestFocusInWindow();
-		background.move();
-		alien.move();
+		drawBackground(g);
+		drawAlien(g);
+		drawShip(g);
+		
 		for(Missile missile : this.missiles) {
 			missile.move();
 		}
 		
-		g.drawImage(background.getImage(), background.getX(), background.getY(), this);
-		int secondBackgroundHeight = background.getY() + background.getImage().getHeight() -1;
-		g.drawImage(background.getImage(), background.getX(), secondBackgroundHeight, this);
-		g.drawImage(ship.getImage(), ship.getX(), ship.getY(), this);	
-		g.drawImage(alien.getImage(), alien.getX(), alien.getY(), this);
 		for(Missile missile : this.missiles) {
 			g.drawImage(missile.getImage(), missile.getX(), missile.getY(), this);
 		}		
+	}
+	
+	public void drawBackground(Graphics g) {
+		Background background = game.getBackground();
+		background.move();
+		g.drawImage(background.getImage(), background.getX(), background.getY(), this);
+		int secondBackgroundHeight = background.getY() + background.getImage().getHeight() -1;
+		g.drawImage(background.getImage(), background.getX(), secondBackgroundHeight, this);
+	}
+	
+	public void drawShip(Graphics g) {
+		Ship ship = game.getShip();
+		g.drawImage(ship.getImage(), ship.getX(), ship.getY(), this);
+	}
+	
+	public void drawAlien(Graphics g) {
+		Alien alien = game.getAlien();
+		alien.move();
+		g.drawImage(alien.getImage(), alien.getX(), alien.getY(), this);
 	}
 	
 	public void update (Graphics g)
@@ -69,11 +78,11 @@ public class GamePanel extends Panel {
 	
 	public boolean keyDown(Event evt, int key) {
 		if (key == Event.LEFT) {
-			ship.moveLeft();
+			game.keyLeft();
 		} else if (key == Event.RIGHT) {
-			ship.moveRight();
+			game.keyRight();
 		} else if (key == Event.UP) {
-			this.missiles.add(ship.fireMissile());
+			//this.missiles.add(ship.fireMissile());
 		}
 			
 		return true;
