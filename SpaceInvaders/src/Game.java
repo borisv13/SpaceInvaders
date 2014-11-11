@@ -63,15 +63,16 @@ public class Game {
 		for(GameMoveableObject moveableObject : getMoveableObjects()) {
 			moveableObject.move();
 		}
-		alienMissiles = randomlyGenerateMissiles(aliens.get(0), alienMissiles);
+		alienMissiles = randomlyGenerateMissiles(aliens, alienMissiles);
 	}
 	
-	private List<Missile> randomlyGenerateMissiles(Alien alien, List<Missile> alienMissiles) {
+	private List<Missile> randomlyGenerateMissiles(List<Alien> aliens, List<Missile> alienMissiles) {
 		List<Missile> newAlienMissiles = alienMissiles;
 		int randomInt = randomGenerator.nextInt(100);
 		if (randomInt > 98)
 		{
-			newAlienMissiles.add(alien.fireMissile());
+			randomInt = randomGenerator.nextInt(aliens.size()-1);
+			newAlienMissiles.add(aliens.get(randomInt).fireMissile()); 
 		}
 		return newAlienMissiles;
 	}
