@@ -1,20 +1,18 @@
 import java.awt.image.BufferedImage;
 
 
-public class Missile extends DualCoordinateImage implements GameMoveableImage{
-
-	int imageHeight;
+public abstract class Missile extends DualCoordinateImage implements GameMoveableImage{
 	
 	Missile(BufferedImage image, int x, int y) {
 		super(image, x, y);
-		this.imageHeight = image.getHeight();
 	}
 	
-	public void move() {
-		this.moveUp();
-	}
+	abstract public void move();
 	
-	private void moveUp() {
-		y -= this.getImage().getHeight() / 3; //TODO move 3 to a tunable parameter?
-	}	
+	public int getCenterRelativeXCoordinate(int relativeObjectX, int relativeObjectWidth) {
+		int missileX = relativeObjectX;
+		missileX += relativeObjectWidth/2;
+		missileX -= image.getWidth()/2;
+		return missileX;
+	}
 }

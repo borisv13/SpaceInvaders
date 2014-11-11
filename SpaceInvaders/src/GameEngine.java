@@ -2,6 +2,7 @@ import java.awt.Event;
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 import java.awt.Graphics;
 
 public class GameEngine {
@@ -10,7 +11,8 @@ public class GameEngine {
 	// This could be a good place for semaphore type logic to update multiple lists together
 	// Or if locking to update takes too long..use double buffering (two copies of each list..the editing and the using copy)
 	private ArrayList<Alien> aliens = new ArrayList<Alien>(20);
-	private ArrayList<Missile> missiles = new ArrayList<Missile>(10);
+	private ArrayList<Missile> shipMissiles = new ArrayList<Missile>(10);
+	private ArrayList<Missile> alienMissiles = new ArrayList<Missile>(10);
 	private ArrayList<GameMoveableImage> moveableImages = new ArrayList<GameMoveableImage>(40);
 	private Ship ship;
 	private ArrayList<DualCoordinateImage> allImages = new ArrayList<DualCoordinateImage>(40);
@@ -40,12 +42,21 @@ public class GameEngine {
 		for(GameMoveableImage moveable : this.moveableImages) {
 			moveable.move();
 		}
+		
+		Random randomGenerator = new Random();
+		int randomInt = randomGenerator.nextInt(100);
+		if (randomInt > 98)
+		{
+			Missile alienMissile = aliens.get(0).fireMissile(); 
+			alienMissiles.add(alienMissile);
+			allImages.add(alienMissile);
+			moveableImages.add(alienMissile);
+		}
 	}
 	
+	// TODO: Want to change this to an iterator based implementation so not exposing the ArrayList
 	public ArrayList<DualCoordinateImage> getImages() {
-		//TODO Double buffering needed here...paint is too slow...paints old position while iterating
 		return allImages;
-		// TODO: Want to change this to an iterator based implementation so not exposing the ArrayList
 	}
 	
 	boolean processPlayerInput(Event evt, int key) {
@@ -53,9 +64,9 @@ public class GameEngine {
 			ship.moveLeft();
 		} else if (key == Event.RIGHT) {
 			ship.moveRight();
-		} else if (key == Event.UP) {
+		} else if (key == 32) {
 			Missile missile = ship.fireMissile();
-			missiles.add(missile);
+			shipMissiles.add(missile);
 			allImages.add(missile);
 			moveableImages.add(missile);
 		}

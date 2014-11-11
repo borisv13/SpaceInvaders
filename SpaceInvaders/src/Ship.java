@@ -16,7 +16,8 @@ public class Ship extends DualCoordinateImage{
 	}
 	
 	public Missile fireMissile() {
-		Missile newMissile = Factory.createMissile(this.getX(), 0);
+		Missile newMissile = Factory.createShipMissile(0, 0);
+		newMissile.setX(newMissile.getCenterRelativeXCoordinate(getX(), getImage().getWidth()));
 		newMissile.setY(this.getY() - newMissile.getImage().getHeight());
 		return newMissile;
 	}

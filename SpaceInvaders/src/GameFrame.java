@@ -10,9 +10,8 @@ public class GameFrame extends Frame {
 	GamePanel gamePanel;
 	
 	GameFrame(GameEngine engine) {
-		setMaximizedBounds(getMaximumWindowBounds());
-		setSize(getMaximizedBounds().getSize());
-		//TunableParameters.SetReferenceSpeed(this.getWidth()/800);
+		setSize(TunableParameters.ScreenWidth, TunableParameters.ScreenHeight);
+		TunableParameters.SetReferenceSpeed(this.getWidth()/800);
 		setResizable(false);
 		addWindowClosingListener();
 		gamePanel = new GamePanel(this.getWidth(), this.getHeight(), engine);
@@ -26,11 +25,6 @@ public class GameFrame extends Frame {
 				System.exit(0);
 			}
 		});
-	}
-	
-	Rectangle getMaximumWindowBounds() {
-		GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
-		return graphicsEnvironment.getMaximumWindowBounds();
 	}
 	
 	public void paint(Graphics g) {
