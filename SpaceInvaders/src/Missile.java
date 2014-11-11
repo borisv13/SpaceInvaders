@@ -1,7 +1,7 @@
 import java.awt.image.BufferedImage;
 
 
-public abstract class Missile extends DualCoordinateImage implements GameMoveableImage{
+public abstract class Missile extends DualCoordinateImage implements GameMoveableObject{
 	
 	Missile(BufferedImage image, int x, int y) {
 		super(image, x, y);

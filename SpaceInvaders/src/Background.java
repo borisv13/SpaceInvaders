@@ -1,7 +1,7 @@
 import java.awt.image.BufferedImage;
 
 
-public class Background extends DualCoordinateImage implements GameMoveableImage {
+public class Background extends DualCoordinateImage implements GameMoveableObject {
 	
 	Background(BufferedImage image, int initialX, int initialY) {
 		super(image, initialX, initialY);

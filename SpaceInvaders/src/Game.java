@@ -37,6 +37,15 @@ public class Game {
 	public List<Missile> getAlienMissiles() {
 		return alienMissiles;
 	}
+	
+	private List<GameMoveableObject> getMoveableObjects() {
+		List<GameMoveableObject> moveableObjects = new ArrayList<GameMoveableObject>();
+		moveableObjects.add(background);
+		moveableObjects.addAll(aliens);
+		moveableObjects.addAll(alienMissiles);
+		moveableObjects.addAll(shipMissiles);
+		return moveableObjects;
+	}
 
 	void keyLeft() {
 		ship.moveLeft();
@@ -51,18 +60,10 @@ public class Game {
 	}
 	
 	void run() {
-		background.move();
-		for(Alien alien : aliens) {
-			alien.move();
-		}
-		for(Missile missile : alienMissiles) {
-			missile.move();
+		for(GameMoveableObject moveableObject : getMoveableObjects()) {
+			moveableObject.move();
 		}
 		alienMissiles = randomlyGenerateMissiles(aliens.get(0), alienMissiles);
-		
-		for(Missile missile : shipMissiles) {
-			missile.move();
-		}
 	}
 	
 	private List<Missile> randomlyGenerateMissiles(Alien alien, List<Missile> alienMissiles) {

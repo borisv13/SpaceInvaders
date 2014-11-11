@@ -1,7 +1,7 @@
 import java.awt.image.BufferedImage;
 
 
-public class Alien extends DualCoordinateImage implements GameMoveableImage{
+public class Alien extends DualCoordinateImage implements GameMoveableObject{
 
 	int screenWidth;
 	int imageWidth;

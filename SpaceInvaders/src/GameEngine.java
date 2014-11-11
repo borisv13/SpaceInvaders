@@ -10,7 +10,7 @@ public class GameEngine {
 	private ArrayList<Alien> aliens = new ArrayList<Alien>(20);
 	private ArrayList<Missile> shipMissiles = new ArrayList<Missile>(10);
 	private ArrayList<Missile> alienMissiles = new ArrayList<Missile>(10);
-	private ArrayList<GameMoveableImage> moveableImages = new ArrayList<GameMoveableImage>(40);
+	private ArrayList<GameMoveableObject> moveableImages = new ArrayList<GameMoveableObject>(40);
 	private Ship ship;
 	private ArrayList<DualCoordinateImage> allImages = new ArrayList<DualCoordinateImage>(40);
 	private int width;
@@ -37,7 +37,7 @@ public class GameEngine {
 	}
 	
 	void runFrame() {
-		for(GameMoveableImage moveable : this.moveableImages) {
+		for(GameMoveableObject moveable : this.moveableImages) {
 			moveable.move();
 		}		
 		
