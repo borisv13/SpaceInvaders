@@ -1,7 +1,7 @@
 import java.awt.image.BufferedImage;
 
 
-public class Missile extends DualCoordinateImage{
+public class Missile extends DualCoordinateImage implements GameMoveableImage{
 
 	int imageHeight;
 	

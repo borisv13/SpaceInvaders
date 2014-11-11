@@ -9,13 +9,13 @@ public class GameFrame extends Frame {
 
 	GamePanel gamePanel;
 	
-	GameFrame() {
+	GameFrame(GameEngine engine) {
 		setMaximizedBounds(getMaximumWindowBounds());
 		setSize(getMaximizedBounds().getSize());
-		TunableParameters.SetReferenceSpeed(this.getWidth()/800);
+		//TunableParameters.SetReferenceSpeed(this.getWidth()/800);
 		setResizable(false);
 		addWindowClosingListener();
-		gamePanel = new GamePanel(this.getWidth(), this.getHeight());
+		gamePanel = new GamePanel(this.getWidth(), this.getHeight(), engine);
 		this.add(gamePanel);
 		setVisible(true);
 	}
