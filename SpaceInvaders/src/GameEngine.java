@@ -16,10 +16,12 @@ public class GameEngine {
 	private ArrayList<GameMoveableImage> moveableImages = new ArrayList<GameMoveableImage>(40);
 	private Ship ship;
 	private ArrayList<DualCoordinateImage> allImages = new ArrayList<DualCoordinateImage>(40);
+	private int width;
 	
 	void init(int width, int height) {
 		// TODO Move this code to a GameGenerator class?
 		// TODO Maybe add individual addXX methods for background, alien, etc
+		this.width = width;
 		Background background = Factory.createBackground(0, 0);
 		allImages.add(background);
 		moveableImages.add(background);
@@ -41,17 +43,28 @@ public class GameEngine {
 	void runFrame() {
 		for(GameMoveableImage moveable : this.moveableImages) {
 			moveable.move();
-		}
+		}		
 		
 		Random randomGenerator = new Random();
 		int randomInt = randomGenerator.nextInt(100);
 		if (randomInt > 98)
 		{
-			Missile alienMissile = aliens.get(0).fireMissile(); 
+			randomInt = randomGenerator.nextInt(aliens.size()-1);
+			Missile alienMissile = aliens.get(randomInt).fireMissile(); 
 			alienMissiles.add(alienMissile);
 			allImages.add(alienMissile);
 			moveableImages.add(alienMissile);
 		}
+		
+		randomInt = randomGenerator.nextInt(100);
+		if (aliens.size() < 20 && randomInt > 98 && aliens.get(aliens.size() - 1).x > 25) {
+			Alien alien = Factory.createAlien(0, 0);
+			alien.setScreenWidth(width);		
+			aliens.add(alien);		
+			allImages.add(alien);
+			moveableImages.add(alien);			
+		}
+
 	}
 	
 	// TODO: Want to change this to an iterator based implementation so not exposing the ArrayList
