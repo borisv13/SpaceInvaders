@@ -13,12 +13,12 @@ public class GamePanel extends Panel {
 	private static final long serialVersionUID = 1L;
 	
 	private Image dbImage;
-	private Game game;
+	private GameEngine game;
 	
 	GamePanel(int screenWidth, int screenHeight) {
 		this.setCursor(getTransparentCursor());
 		this.setSize(screenWidth, screenHeight);
-		game = new Game(screenWidth, screenHeight);
+		game = new GameEngine(screenWidth, screenHeight);
 		repaint();
 	}
 	

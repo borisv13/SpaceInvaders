@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Game {
+public class GameEngine {
 	
 	private Background background;
 	private Ship ship;
@@ -11,7 +11,7 @@ public class Game {
 	private List<Missile> alienMissiles = new ArrayList<Missile>();
 	Random randomGenerator = new Random();
 	
-	Game(int screenWidth, int screenHeight) {
+	GameEngine(int screenWidth, int screenHeight) {
 		background = Factory.createBackground(0, 0);
 		ship = Factory.createShip(screenWidth/2, 0);
 		ship.setY(screenHeight - ship.getImage().getHeight()*2);
