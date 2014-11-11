@@ -26,8 +26,7 @@ public class GameEngine {
 		allImages.add(background);
 		moveableImages.add(background);
 		
-		Alien alien = Factory.createAlien(0, 0);
-		alien.setScreenWidth(width);		
+		Alien alien = Factory.createAlien(0, 0, width);
 		aliens.add(alien);		
 		allImages.add(alien);
 		moveableImages.add(alien);
@@ -55,8 +54,7 @@ public class GameEngine {
 		
 		randomInt = randomGenerator.nextInt(100);
 		if (aliens.size() < 20 && randomInt > 98 && aliens.get(aliens.size() - 1).x > 25) {
-			Alien alien = Factory.createAlien(0, 0);
-			alien.setScreenWidth(width);		
+			Alien alien = Factory.createAlien(0, 0, width);
 			aliens.add(alien);		
 			allImages.add(alien);
 			moveableImages.add(alien);			

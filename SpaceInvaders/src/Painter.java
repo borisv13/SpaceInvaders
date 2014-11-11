@@ -21,7 +21,9 @@ public class Painter{
 		g.drawImage(ship.getImage(), ship.getX(), ship.getY(), panel);
 	}
 	
-	public static void drawAlien(Graphics g, Alien alien, Panel panel) {
-		g.drawImage(alien.getImage(), alien.getX(), alien.getY(), panel);
+	public static void drawAliens(Graphics g, List<Alien> aliens, Panel panel) {
+		for(Alien alien : aliens) {
+			g.drawImage(alien.getImage(), alien.getX(), alien.getY(), panel);
+		}
 	}
 }

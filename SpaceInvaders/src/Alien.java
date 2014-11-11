@@ -8,15 +8,11 @@ public class Alien extends DualCoordinateImage implements GameMoveableImage{
 	int imageHeight;
 	boolean movingRight = true;
 	
-	Alien(BufferedImage image, int x, int y) {
+	Alien(BufferedImage image, int x, int y, int screenWidth) {
 		super(image, x, y);
 		this.imageWidth = image.getWidth();
 		this.imageHeight = image.getHeight();
-	}
-	
-	// this is just a hack at the moment..need a better way..maybe a collection of screen objects that can get to their parent easily to read the screen width
-	public void setScreenWidth(int width) {
-		this.screenWidth = width;
+		this.screenWidth = screenWidth;
 	}
 	
 	public void move() {

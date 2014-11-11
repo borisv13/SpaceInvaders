@@ -6,17 +6,16 @@ public class Game {
 	
 	private Background background;
 	private Ship ship;
-	private Alien alien;
+	private List<Alien> aliens = new ArrayList<Alien>();
 	private List<Missile> shipMissiles = new ArrayList<Missile>();
 	private List<Missile> alienMissiles = new ArrayList<Missile>();
 	Random randomGenerator = new Random();
 	
-	Game(int width, int height) {
+	Game(int screenWidth, int screenHeight) {
 		background = Factory.createBackground(0, 0);
-		ship = Factory.createShip(width/2, 0);
-		ship.setY(height - ship.getImage().getHeight()*2);
-		alien = Factory.createAlien(0, 0);
-		alien.setScreenWidth(width);
+		ship = Factory.createShip(screenWidth/2, 0);
+		ship.setY(screenHeight - ship.getImage().getHeight()*2);
+		aliens = LevelCreator.getAliens(screenWidth, screenHeight);
 	}
 	
 	public Background getBackground() {
@@ -27,8 +26,8 @@ public class Game {
 		return ship;
 	}
 	
-	public Alien getAlien() {
-		return alien;
+	public List<Alien> getAliens() {
+		return aliens;
 	}
 	
 	public List<Missile> getShipMissiles() {
@@ -53,11 +52,13 @@ public class Game {
 	
 	void run() {
 		background.move();
-		alien.move();
+		for(Alien alien : aliens) {
+			alien.move();
+		}
 		for(Missile missile : alienMissiles) {
 			missile.move();
 		}
-		alienMissiles = randomlyGenerateMissiles(alien, alienMissiles);
+		alienMissiles = randomlyGenerateMissiles(aliens.get(0), alienMissiles);
 		
 		for(Missile missile : shipMissiles) {
 			missile.move();

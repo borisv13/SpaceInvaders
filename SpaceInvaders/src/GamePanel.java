@@ -15,10 +15,10 @@ public class GamePanel extends Panel {
 	private Image dbImage;
 	private Game game;
 	
-	GamePanel(int width, int height) {
+	GamePanel(int screenWidth, int screenHeight) {
 		this.setCursor(getTransparentCursor());
-		this.setSize(width, height);
-		game = new Game(width, height);
+		this.setSize(screenWidth, screenHeight);
+		game = new Game(screenWidth, screenHeight);
 		repaint();
 	}
 	
@@ -33,7 +33,7 @@ public class GamePanel extends Panel {
 
 		game.run();
 		Painter.drawBackground(g, game.getBackground(), this);
-		Painter.drawAlien(g, game.getAlien(), this);
+		Painter.drawAliens(g, game.getAliens(), this);
 		Painter.drawShip(g, game.getShip(), this);
 		Painter.drawMissiles(g, game.getShipMissiles(), this);
 		Painter.drawMissiles(g, game.getAlienMissiles(), this);
