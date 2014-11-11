@@ -2,7 +2,6 @@
 public class SpaceInvaders implements Runnable {
 
 	GameFrame gameFrame;
-	private GameEngine engine;
 	
 	public static void main(String[] args) {
 		SpaceInvaders spaceInvaders = new SpaceInvaders();

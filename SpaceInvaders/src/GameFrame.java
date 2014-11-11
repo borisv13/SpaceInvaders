@@ -1,12 +1,11 @@
 import java.awt.Frame;
 import java.awt.Graphics;
-import java.awt.GraphicsEnvironment;
-import java.awt.Rectangle;
 import java.awt.event.WindowAdapter;
 
 
 public class GameFrame extends Frame {
-
+	private static final long serialVersionUID = 1L;
+	
 	GamePanel gamePanel;
 	
 	GameFrame() {

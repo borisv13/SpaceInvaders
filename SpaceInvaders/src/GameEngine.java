@@ -1,9 +1,6 @@
 import java.awt.Event;
-import java.awt.Image;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Random;
-import java.awt.Graphics;
 
 public class GameEngine {
 
