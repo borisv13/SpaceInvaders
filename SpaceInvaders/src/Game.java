@@ -60,6 +60,5 @@ public class Game {
 		for(Missile missile : shipMissiles) {
 			missile.move();
 		}
-		
 	}
 }

@@ -9,12 +9,12 @@ public class GameFrame extends Frame {
 
 	GamePanel gamePanel;
 	
-	GameFrame(GameEngine engine) {
+	GameFrame() {
 		setSize(TunableParameters.ScreenWidth, TunableParameters.ScreenHeight);
 		TunableParameters.SetReferenceSpeed(this.getWidth()/800);
 		setResizable(false);
 		addWindowClosingListener();
-		gamePanel = new GamePanel(this.getWidth(), this.getHeight(), engine);
+		gamePanel = new GamePanel(this.getWidth(), this.getHeight());
 		this.add(gamePanel);
 		setVisible(true);
 	}

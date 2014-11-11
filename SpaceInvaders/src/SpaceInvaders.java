@@ -11,9 +11,7 @@ public class SpaceInvaders implements Runnable {
 	}
 
 	void init() {
-		engine = new GameEngine();
-		gameFrame = new GameFrame(engine);		
-		engine.init(gameFrame.getSize().width, gameFrame.getSize().height);
+		gameFrame = new GameFrame();		
 		Thread th = new Thread(this);
 		th.start();
 	}
@@ -26,7 +24,6 @@ public class SpaceInvaders implements Runnable {
 				Thread.sleep(10);				
 				this.gameFrame.repaint();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

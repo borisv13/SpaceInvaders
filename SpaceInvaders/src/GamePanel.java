@@ -11,16 +11,12 @@ import java.awt.image.MemoryImageSource;
 public class GamePanel extends Panel {
 
 	private Image dbImage;
-	private GameEngine engine;
-	// Commenting this out for now since we both did something similar.
-	// private Game game;
+	private Game game;
 	
-	GamePanel(int width, int height, GameEngine engine) {
+	GamePanel(int width, int height) {
 		this.setCursor(getTransparentCursor());
 		this.setSize(width, height);
-		this.engine = engine;
-		// Commenting this out for now since we both did something similar.
-		// game = new Game(width, height);
+		game = new Game(width, height);
 		repaint();
 	}
 	
@@ -33,23 +29,12 @@ public class GamePanel extends Panel {
 		super.paint(g);
 		requestFocusInWindow();
 
-		// TODO Don't really want this runFrame here.  Want it in SpaceInvaders main loop, 
-		// but the call to repaint is async so end up changing images while painting
-		// Maybe need double buffering of the images list?
-		this.engine.runFrame();
-
-		for(DualCoordinateImage image : this.engine.getImages()) {
-			g.drawImage(image.getImage(), image.getX(), image.getY(), this);
-		}		
-
-		// Commenting this out for now since we both did something similar.
-		/* game.run();
+		game.run();
 		Painter.drawBackground(g, game.getBackground(), this);
 		Painter.drawAlien(g, game.getAlien(), this);
 		Painter.drawShip(g, game.getShip(), this);
 		Painter.drawMissiles(g, game.getShipMissiles(), this);
 		Painter.drawMissiles(g, game.getAlienMissiles(), this);
-		*/
 	}
 	
 	public void update (Graphics g)
@@ -67,9 +52,7 @@ public class GamePanel extends Panel {
 	}
 	
 	public boolean keyDown(Event evt, int key) {
-		return this.engine.processPlayerInput(evt, key);
-		// Commenting this out for now since we both did something similar.
-		/*if (key == Event.LEFT) {
+		if (key == Event.LEFT) {
 			game.keyLeft();
 		} else if (key == Event.RIGHT) {
 			game.keyRight();
@@ -78,6 +61,5 @@ public class GamePanel extends Panel {
 		}
 			
 		return true;
-		*/
 	}
 }
