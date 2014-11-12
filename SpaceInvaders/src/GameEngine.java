@@ -107,11 +107,21 @@ public class GameEngine {
 	
 	private List<Missile> randomlyGenerateMissiles(List<Alien> aliens, List<Missile> alienMissiles) {
 		List<Missile> newAlienMissiles = alienMissiles;
+		
+		if (aliens.size() == 0)
+			return newAlienMissiles;
+			
 		int randomInt = randomGenerator.nextInt(100);
 		if (randomInt > 98)
 		{
-			randomInt = randomGenerator.nextInt(aliens.size()-1);
-			newAlienMissiles.add(aliens.get(randomInt).fireMissile()); 
+			int alienToShoot;
+			if (aliens.size() > 1)			{
+				alienToShoot = randomGenerator.nextInt(aliens.size()-1);
+			}
+			else {
+				alienToShoot = 0;
+			}
+			newAlienMissiles.add(aliens.get(alienToShoot).fireMissile()); 
 		}
 		return newAlienMissiles;
 	}
