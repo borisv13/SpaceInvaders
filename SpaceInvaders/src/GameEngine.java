@@ -67,6 +67,8 @@ public class GameEngine {
 			moveableObject.move();
 		}
 		alienMissiles = randomlyGenerateMissiles(aliens, alienMissiles);
+		
+		CollisionDetector.checkShipMissilesAndAliens(aliens, shipMissiles);
 		removeOffScreenMissiles();
 	}
 	
