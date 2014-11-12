@@ -57,9 +57,9 @@ public class GamePanel extends Panel {
 			game.keyLeftDown();
 		} else if (key == Event.RIGHT) {
 			game.keyRightDown();
-		} else if (key == Event.UP) { //space
+		} else if (key == Event.UP) { 
 			game.keyUpDown();
-		} else if (key == 32) {
+		} else if (key == 32) { // space
 			game.keySpaceDown();
 		}
 			
