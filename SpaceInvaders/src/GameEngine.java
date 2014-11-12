@@ -62,7 +62,7 @@ public class GameEngine {
 		this.shipMissiles.add(ship.fireMissile());
 	}
 	
-	void run() {
+	synchronized void run() {
 		for(GameMoveableObject moveableObject : getMoveableObjects()) {
 			moveableObject.move();
 		}

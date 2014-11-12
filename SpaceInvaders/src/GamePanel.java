@@ -31,7 +31,6 @@ public class GamePanel extends Panel {
 		super.paint(g);
 		requestFocusInWindow();
 
-		game.run();
 		Painter.drawBackground(g, game.getBackground(), this);
 		Painter.drawAliens(g, game.getAliens(), this);
 		Painter.drawShip(g, game.getShip(), this);

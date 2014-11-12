@@ -20,7 +20,7 @@ public class SpaceInvaders implements Runnable {
 		Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
 		while(true) {
 			try {				
-				Thread.sleep(10);				
+				Thread.sleep(17);				
 				this.gameFrame.run();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
