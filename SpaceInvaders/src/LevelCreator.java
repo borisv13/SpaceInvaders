@@ -10,7 +10,7 @@ public class LevelCreator {
 	private static final int AlienWidthSeperator = 3;
 	private static final int AlienWidthBufferFactor = 2;
 
-	public static List<Alien> getAliens(int screenWidth, int screenHeight) {
+	public static AlienHorde getAliens(int screenWidth, int screenHeight) {
 		List<Alien> aliens = new ArrayList<Alien>();
 		BufferedImage alienImage = Factory.getImageHandler().getAlien();
 		int height = alienImage.getHeight();
@@ -22,6 +22,6 @@ public class LevelCreator {
 				aliens.add(Factory.createAlien(xCoord, yCoord, screenWidth));
 			}
 		}
-		return aliens;
+		return new AlienHorde(aliens);
 	}
 }

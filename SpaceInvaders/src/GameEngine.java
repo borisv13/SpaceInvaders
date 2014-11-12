@@ -7,7 +7,7 @@ public class GameEngine {
 	
 	private Background background;
 	private Ship ship;
-	private List<Alien> aliens = new ArrayList<Alien>();
+	private AlienHorde aliens;
 	private List<Missile> shipMissiles = new ArrayList<Missile>();
 	private List<Missile> alienMissiles = new ArrayList<Missile>();
 	Random randomGenerator = new Random();
@@ -30,7 +30,7 @@ public class GameEngine {
 	}
 	
 	public List<Alien> getAliens() {
-		return aliens;
+		return aliens.getAliens();
 	}
 	
 	public List<Missile> getShipMissiles() {
@@ -44,7 +44,7 @@ public class GameEngine {
 	private List<GameMoveableObject> getMoveableObjects() {
 		List<GameMoveableObject> moveableObjects = new ArrayList<GameMoveableObject>();
 		moveableObjects.add(background);
-		moveableObjects.addAll(aliens);
+		moveableObjects.add(aliens);
 		moveableObjects.addAll(alienMissiles);
 		moveableObjects.addAll(shipMissiles);
 		return moveableObjects;
@@ -66,9 +66,9 @@ public class GameEngine {
 		for(GameMoveableObject moveableObject : getMoveableObjects()) {
 			moveableObject.move();
 		}
-		alienMissiles = randomlyGenerateMissiles(aliens, alienMissiles);
+		alienMissiles = randomlyGenerateMissiles(aliens.getAliens(), alienMissiles);
 		
-		CollisionDetector.checkShipMissilesAndAliens(aliens, shipMissiles);
+		CollisionDetector.checkShipMissilesAndAliens(aliens.getAliens(), shipMissiles);
 		removeOffScreenMissiles();
 	}
 	
