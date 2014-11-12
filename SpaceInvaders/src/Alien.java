@@ -1,7 +1,7 @@
 import java.awt.image.BufferedImage;
 
 
-public class Alien extends DualCoordinateImage implements GameMoveableObject{
+public class Alien extends DualCoordinateImage{
 
 	int screenWidth;
 	int imageWidth;
@@ -15,35 +15,9 @@ public class Alien extends DualCoordinateImage implements GameMoveableObject{
 		this.screenWidth = screenWidth;
 	}
 	
-	public void move() {
-		if (this.movingRight) {
-			if (x + this.imageWidth + 1 > this.screenWidth) {
-				this.moveDown();
-				this.movingRight = false;
-			}
-			else {
-				this.moveRight();
-			}				
-		} else {
-			if (x - 1 < 0) {		
-				this.moveDown();
-				this.movingRight = true;
-			} else {
-				this.moveLeft();
-			}
-		}
-	}
-	
-	private void moveDown() {
-		y += this.getImage().getHeight() + 5; //TODO move 5 to a tunable parameter?
-	}
-	
-	private void moveRight() {
-		x += TunableParameters.AlienSpeed;
-	}
-
-	private void moveLeft() {
-		x -= TunableParameters.AlienSpeed;
+	public void move(int deltaX, int deltaY) {
+		x += deltaX;
+		y += deltaY;
 	}
 	
 	public Missile fireMissile() {
