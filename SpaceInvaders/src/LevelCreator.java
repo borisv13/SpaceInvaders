@@ -22,6 +22,6 @@ public class LevelCreator {
 				aliens.add(Factory.createAlien(xCoord, yCoord, screenWidth));
 			}
 		}
-		return new AlienHorde(aliens);
+		return new AlienHorde(screenWidth, aliens);
 	}
 }
