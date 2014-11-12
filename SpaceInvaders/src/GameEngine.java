@@ -12,6 +12,7 @@ public class GameEngine {
 	private List<Missile> alienMissiles = new ArrayList<Missile>();
 	Random randomGenerator = new Random();
 	private int screenHeight;
+	private boolean pause;
 	
 	GameEngine(int screenWidth, int screenHeight) {
 		this.screenHeight = screenHeight;
@@ -19,6 +20,7 @@ public class GameEngine {
 		ship = Factory.createShip(screenWidth/2, 0);
 		ship.setY(screenHeight - ship.getImage().getHeight()*2);
 		aliens = LevelCreator.getAliens(screenWidth, screenHeight);		
+		pause = true;
 	}
 	
 	public Background getBackground() {
@@ -51,25 +53,41 @@ public class GameEngine {
 	}
 
 	void keyLeft() {
-		ship.moveLeft();
+		if(processingOn()) {
+			ship.moveLeft();
+		}
 	}
 	
 	void keyRight() {
-		ship.moveRight();
+		if(processingOn()) {
+			ship.moveRight();
+		}
+	}
+	
+	void keyUp() {
+		if(processingOn()) {
+			this.shipMissiles.add(ship.fireMissile());
+		}
 	}
 	
 	void keySpace() {
-		this.shipMissiles.add(ship.fireMissile());
+		togglePause();
 	}
 	
 	synchronized void run() {
-		for(GameMoveableObject moveableObject : getMoveableObjects()) {
-			moveableObject.move();
+		if(processingOn()) {
+			for(GameMoveableObject moveableObject : getMoveableObjects()) {
+				moveableObject.move();
+			}
+			alienMissiles = randomlyGenerateMissiles(aliens.getAliens(), alienMissiles);
+			
+			CollisionDetector.checkShipMissilesAndAliens(aliens.getAliens(), shipMissiles);
+			removeOffScreenMissiles();
 		}
-		alienMissiles = randomlyGenerateMissiles(aliens.getAliens(), alienMissiles);
-		
-		CollisionDetector.checkShipMissilesAndAliens(aliens.getAliens(), shipMissiles);
-		removeOffScreenMissiles();
+	}
+	
+	private boolean processingOn() {
+		return !pause;
 	}
 	
 	private void removeOffScreenMissiles() {
@@ -103,5 +121,9 @@ public class GameEngine {
 			newAlienMissiles.add(aliens.get(randomInt).fireMissile()); 
 		}
 		return newAlienMissiles;
+	}
+	
+	private void togglePause() {
+		pause = !pause;
 	}
 }
