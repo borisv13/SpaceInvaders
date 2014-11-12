@@ -32,10 +32,10 @@ public class GamePanel extends Panel {
 		requestFocusInWindow();
 
 		Painter.drawBackground(g, game.getBackground(), this);
-		Painter.drawAliens(g, game.getAliens(), this);
-		Painter.drawShip(g, game.getShip(), this);
-		Painter.drawMissiles(g, game.getShipMissiles(), this);
-		Painter.drawMissiles(g, game.getAlienMissiles(), this);
+		Painter.drawDualCoordinateImages(g, game.getAliens(), this);
+		Painter.drawDualCoordinateImage(g, game.getShip(), this);
+		Painter.drawDualCoordinateImages(g, game.getShipMissiles(), this);
+		Painter.drawDualCoordinateImages(g, game.getAlienMissiles(), this);
 	}
 	
 	public void update (Graphics g)
