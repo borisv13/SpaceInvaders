@@ -26,8 +26,7 @@ public class GameFrame extends Frame {
 		});
 	}
 	
-	public void paint(Graphics g) {
-		super.paint(g);
-		gamePanel.repaint();
+	public void run() {
+		gamePanel.run();
 	}
 }

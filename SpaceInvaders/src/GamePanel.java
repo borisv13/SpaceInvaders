@@ -64,4 +64,9 @@ public class GamePanel extends Panel {
 			
 		return true;
 	}
+	
+	public void run() {
+		game.run();
+		repaint();
+	}
 }

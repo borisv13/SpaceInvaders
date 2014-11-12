@@ -21,7 +21,7 @@ public class SpaceInvaders implements Runnable {
 		while(true) {
 			try {				
 				Thread.sleep(10);				
-				this.gameFrame.repaint();
+				this.gameFrame.run();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
