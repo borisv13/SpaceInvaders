@@ -11,10 +11,12 @@ public class GameEngine {
 	private List<Missile> shipMissiles = new ArrayList<Missile>();
 	private List<Missile> alienMissiles = new ArrayList<Missile>();
 	Random randomGenerator = new Random();
+	private int screenWidth;
 	private int screenHeight;
 	private boolean pause;
 	
 	GameEngine(int screenWidth, int screenHeight) {
+		this.screenWidth = screenWidth;
 		this.screenHeight = screenHeight;
 		background = Factory.createBackground(0, 0);
 		ship = Factory.createShip(screenWidth/2, 0);
@@ -82,34 +84,13 @@ public class GameEngine {
 			alienMissiles = randomlyGenerateMissiles(aliens.getAliens(), alienMissiles);
 			
 			CollisionDetector.checkShipMissilesAndAliens(aliens.getAliens(), shipMissiles);
-			removeOffScreenMissiles();
+			CollisionDetector.checkIfInScreen(shipMissiles, screenWidth, screenHeight);
+			CollisionDetector.checkIfInScreen(alienMissiles, screenWidth, screenHeight);
 		}
 	}
 	
 	private boolean processingOn() {
 		return !pause;
-	}
-	
-	private void removeOffScreenMissiles() {
-		// First pass at removing off screen missiles.
-		// Code is repeated due to different logic to detect off screen.
-		// TODO Extract into a method on Missile to determine if off screen then each class can check for itself
-		// then make this method accept the list as a parameter and call it once for each missile list.
-		Iterator<Missile> itShip = shipMissiles.iterator();
-		while (itShip.hasNext()) {
-			Missile missile = itShip.next();
-			if (missile.getY() < -missile.getImage().getHeight()) {
-				itShip.remove();
-			}
-		}
-		
-		Iterator<Missile> itAlien = alienMissiles.iterator();
-		while (itAlien.hasNext()) {
-			Missile missile = itAlien.next();
-			if (missile.getY() > this.screenHeight) {
-				itAlien.remove();
-			}
-		}	
 	}
 	
 	private List<Missile> randomlyGenerateMissiles(List<Alien> aliens, List<Missile> alienMissiles) {
