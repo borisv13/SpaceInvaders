@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -47,6 +46,7 @@ public class GameEngine {
 	
 	private List<GameMoveableObject> getMoveableObjects() {
 		List<GameMoveableObject> moveableObjects = new ArrayList<GameMoveableObject>();
+		moveableObjects.add(ship);
 		moveableObjects.add(background);
 		moveableObjects.add(aliens);
 		moveableObjects.addAll(alienMissiles);
@@ -54,25 +54,37 @@ public class GameEngine {
 		return moveableObjects;
 	}
 
-	void keyLeft() {
+	void keyLeftDown() {
 		if(processingOn()) {
-			ship.moveLeft();
+			ship.startMovingLeft();
 		}
 	}
 	
-	void keyRight() {
+	void keyLeftUp() {
 		if(processingOn()) {
-			ship.moveRight();
+			ship.stopMovingLeft();
 		}
 	}
 	
-	void keyUp() {
+	void keyRightDown() {
+		if(processingOn()) {
+			ship.startMovingRight();
+		}
+	}
+	
+	void keyRightUp() {
+		if(processingOn()) {
+			ship.stopMovingRight();
+		}
+	}
+	
+	void keyUpDown() {
 		if(processingOn()) {
 			this.shipMissiles.add(ship.fireMissile());
 		}
 	}
 	
-	void keySpace() {
+	void keySpaceDown() {
 		togglePause();
 	}
 	

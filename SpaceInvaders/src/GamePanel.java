@@ -54,13 +54,23 @@ public class GamePanel extends Panel {
 	
 	public boolean keyDown(Event evt, int key) {
 		if (key == Event.LEFT) {
-			game.keyLeft();
+			game.keyLeftDown();
 		} else if (key == Event.RIGHT) {
-			game.keyRight();
+			game.keyRightDown();
 		} else if (key == Event.UP) { //space
-			game.keyUp();
+			game.keyUpDown();
 		} else if (key == 32) {
-			game.keySpace();
+			game.keySpaceDown();
+		}
+			
+		return true;
+	}
+	
+	public boolean keyUp(Event evt, int key) {
+		if (key == Event.LEFT) {
+			game.keyLeftUp();
+		} else if (key == Event.RIGHT) {
+			game.keyRightUp();
 		}
 			
 		return true;
