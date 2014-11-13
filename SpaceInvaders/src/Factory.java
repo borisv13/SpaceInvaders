@@ -7,8 +7,8 @@ public class Factory {
 		return new Background(imageHandler.getBackground(), x, y);
 	}
 	
-	static public Ship createShip(int x, int y) {
-		return new Ship(imageHandler.getShip(), x, y);
+	static public Ship createShip(int x, int y, int screenWidth) {
+		return new Ship(imageHandler.getShip(), x, y, screenWidth);
 	}
 
 	static public Alien createAlien(int x, int y, int screenWidth) {

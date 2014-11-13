@@ -18,7 +18,7 @@ public class GameEngine {
 		this.screenWidth = screenWidth;
 		this.screenHeight = screenHeight;
 		background = Factory.createBackground(0, 0);
-		ship = Factory.createShip(screenWidth/2, 0);
+		ship = Factory.createShip(screenWidth/2, 0, screenWidth);
 		ship.setY(screenHeight - ship.getImage().getHeight()*2);
 		aliens = LevelCreator.getAliens(screenWidth, screenHeight);		
 		pause = true;

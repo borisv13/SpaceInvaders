@@ -5,9 +5,11 @@ public class Ship extends DualCoordinateImage implements GameMoveableObject{
 
 	private int deltaX;
 	private int shipSpeed = TunableParameters.ShipSpeed;
+	private int limitX;
 	
-	Ship(BufferedImage image, int x, int y) {
+	Ship(BufferedImage image, int x, int y, int screenWidth) {
 		super(image, x, y);
+		this.limitX = screenWidth - image.getWidth() - 10;  // Need the 10 to keep the wings on screen..not sure why yet
 		deltaX = 0;
 	}
 	
@@ -41,5 +43,10 @@ public class Ship extends DualCoordinateImage implements GameMoveableObject{
 	@Override
 	public void move() {
 		x += deltaX;
+		if (x <= 0){
+			x = 0;
+		} else if (x >= this.limitX) {
+			x = this.limitX;
+		}		
 	}
 }
