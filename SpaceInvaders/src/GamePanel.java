@@ -36,6 +36,7 @@ public class GamePanel extends Panel {
 		Painter.drawDualCoordinateImage(g, game.getShip(), this);
 		Painter.drawDualCoordinateImages(g, game.getShipMissiles(), this);
 		Painter.drawDualCoordinateImages(g, game.getAlienMissiles(), this);
+		Painter.drawScore(g, game.getScore());
 	}
 	
 	public void update (Graphics g)

@@ -13,6 +13,7 @@ public class GameEngine {
 	private int screenWidth;
 	private int screenHeight;
 	private boolean pause;
+	private int gameScore = 0;
 	
 	GameEngine(int screenWidth, int screenHeight) {
 		this.screenWidth = screenWidth;
@@ -88,6 +89,15 @@ public class GameEngine {
 		togglePause();
 	}
 	
+	private void incrementScore(int increment) {  // may need to be public later, not sure yet
+		this.gameScore += increment;
+	}
+	
+	int getScore() {
+		return this.gameScore;
+	}
+
+	
 	synchronized void run() {
 		if(processingOn()) {
 			for(GameMoveableObject moveableObject : getMoveableObjects()) {
@@ -95,7 +105,11 @@ public class GameEngine {
 			}
 			alienMissiles = randomlyGenerateMissiles(aliens.getAliens(), alienMissiles);
 			
+			int numAliensAlive = aliens.getAliens().size();
 			CollisionDetector.checkShipMissilesAndAliens(aliens.getAliens(), shipMissiles);
+			int numAliensKilled = numAliensAlive - aliens.getAliens().size();
+			this.incrementScore(TunableParameters.AlienScore * numAliensKilled);
+			
 			CollisionDetector.checkIfInScreen(shipMissiles, screenWidth, screenHeight);
 			CollisionDetector.checkIfInScreen(alienMissiles, screenWidth, screenHeight);
 		}

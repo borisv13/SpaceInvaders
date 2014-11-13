@@ -6,6 +6,7 @@ public class TunableParameters {
 	public static int AlienSpeed = TunableParameters.ReferenceSpeed * 2;
 	public static int AlienVerticalSpeed = TunableParameters.ReferenceSpeed * 10;
 	public static int MissileSpeed = 3;
+	public static int AlienScore = 10;
 	
 	public static int ScreenWidth = 800;
 	public static int ScreenHeight = 600;

@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Panel;
 import java.util.List;
@@ -19,5 +20,10 @@ public class Painter{
 	
 	public static void drawDualCoordinateImage(Graphics g, DualCoordinateImage image, Panel panel) {
 		g.drawImage(image.getImage(), image.getX(), image.getY(), panel);
+	}
+	
+	public static void drawScore(Graphics g, int score) {
+		g.setColor(Color.CYAN);
+		g.drawString("Score: " + score, 10, 10);
 	}
 }
