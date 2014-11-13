@@ -5,7 +5,8 @@ import java.util.List;
 
 public class CollisionDetector {
 	
-	public static void checkShipMissilesAndAliens(List<Alien> aliens, List<Missile> shipMissiles) {
+	public static int checkShipMissilesAndAliens(List<Alien> aliens, List<Missile> shipMissiles) {
+		int numAliensAlive = aliens.size();
 		for(Iterator<Alien> alienIterator = aliens.iterator(); alienIterator.hasNext();) {
 			DualCoordinateImage alien = alienIterator.next();
 			Rectangle alienRect = createNewRect(alien);
@@ -18,6 +19,7 @@ public class CollisionDetector {
 				}
 			}
 		}
+		return numAliensAlive - aliens.size();
 	}
 	
 	public static void checkIfInScreen(List<? extends DualCoordinateImage> images, int screenWidth, int screenHeight) {

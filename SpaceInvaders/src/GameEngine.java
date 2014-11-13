@@ -103,11 +103,9 @@ public class GameEngine {
 			for(GameMoveableObject moveableObject : getMoveableObjects()) {
 				moveableObject.move();
 			}
-			alienMissiles = randomlyGenerateMissiles(aliens.getAliens(), alienMissiles);
-			
-			int numAliensAlive = aliens.getAliens().size();
-			CollisionDetector.checkShipMissilesAndAliens(aliens.getAliens(), shipMissiles);
-			int numAliensKilled = numAliensAlive - aliens.getAliens().size();
+			alienMissiles = aliens.randomlyGenerateMissiles(alienMissiles);
+						
+			int numAliensKilled = CollisionDetector.checkShipMissilesAndAliens(aliens.getAliens(), shipMissiles);			
 			this.incrementScore(TunableParameters.AlienScore * numAliensKilled);
 			
 			CollisionDetector.checkIfInScreen(shipMissiles, screenWidth, screenHeight);
@@ -117,27 +115,6 @@ public class GameEngine {
 	
 	private boolean processingOn() {
 		return !pause;
-	}
-	
-	private List<Missile> randomlyGenerateMissiles(List<Alien> aliens, List<Missile> alienMissiles) {
-		List<Missile> newAlienMissiles = alienMissiles;
-		
-		if (aliens.size() == 0)
-			return newAlienMissiles;
-			
-		int randomInt = randomGenerator.nextInt(100);
-		if (randomInt > 98)
-		{
-			int alienToShoot;
-			if (aliens.size() > 1)			{
-				alienToShoot = randomGenerator.nextInt(aliens.size()-1);
-			}
-			else {
-				alienToShoot = 0;
-			}
-			newAlienMissiles.add(aliens.get(alienToShoot).fireMissile()); 
-		}
-		return newAlienMissiles;
 	}
 	
 	private void togglePause() {

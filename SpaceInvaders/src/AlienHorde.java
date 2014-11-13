@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Random;
 
 
 public class AlienHorde implements GameMoveableObject {
@@ -6,6 +7,7 @@ public class AlienHorde implements GameMoveableObject {
 	private List<Alien> aliens;
 	private int screenWidth;
 	private int deltaX = TunableParameters.AlienSpeed;
+	Random randomGenerator = new Random();
 	
 	public AlienHorde(int screenWidth, List<Alien> aliens) {
 		this.screenWidth = screenWidth;
@@ -32,5 +34,28 @@ public class AlienHorde implements GameMoveableObject {
 	
 	public List<Alien> getAliens(){
 		return this.aliens;
-	}	
+	}
+	
+	public List<Missile> randomlyGenerateMissiles(List<Missile> currentAlienMissiles) {
+		List<Missile> newAlienMissiles = currentAlienMissiles;
+		
+		if (aliens.size() == 0)
+			return newAlienMissiles;
+			
+		int randomInt = randomGenerator.nextInt(100);
+		if (randomInt < TunableParameters.PercentChanceAlienFiresMissile)
+		{
+			int alienToShoot;
+			if (aliens.size() > 1)			{
+				alienToShoot = randomGenerator.nextInt(aliens.size()-1);
+			}
+			else {
+				alienToShoot = 0;
+			}
+			newAlienMissiles.add(aliens.get(alienToShoot).fireMissile()); 
+		}
+		return newAlienMissiles;
+	}
+	
+
 }
