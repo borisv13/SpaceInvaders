@@ -16,6 +16,7 @@ public class CollisionDetector {
 				if(alienRect.intersects(shipMissileRect)) {
 					alienIterator.remove();
 					shipMissileIterator.remove();
+					break;
 				}
 			}
 		}
@@ -33,7 +34,7 @@ public class CollisionDetector {
 		}
 	}
 	
-	private static Rectangle createNewRect(DualCoordinateImage image) {
+	private static Rectangle createNewRect(DualCoordinateImage image) { 
 		return new Rectangle(image.getX(), image.getY(), image.getImage().getWidth(), image.getImage().getHeight());
 	}
 
