@@ -81,7 +81,10 @@ public class GameEngine {
 	
 	void keyUpDown() {
 		if(processingOn()) {
-			this.shipMissiles.add(ship.fireMissile());
+			Missile newMissile = ship.fireMissile();
+			if(newMissile != null) {
+				this.shipMissiles.add(newMissile);
+			}
 		}
 	}
 	
@@ -103,7 +106,11 @@ public class GameEngine {
 			for(GameMoveableObject moveableObject : getMoveableObjects()) {
 				moveableObject.move();
 			}
-			alienMissiles = aliens.randomlyGenerateMissiles(alienMissiles);
+			ship.regenerate();
+			Missile newMissile = aliens.randomlyGenerateMissiles();
+			if(newMissile != null) {
+				alienMissiles.add(newMissile);
+			}
 						
 			int numAliensKilled = CollisionDetector.checkShipMissilesAndAliens(aliens.getAliens(), shipMissiles);			
 			this.incrementScore(TunableParameters.AlienScore * numAliensKilled);

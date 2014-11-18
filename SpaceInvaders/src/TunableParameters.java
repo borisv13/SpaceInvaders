@@ -8,6 +8,8 @@ public class TunableParameters {
 	public static int MissileSpeed = 3;
 	public static int AlienScore = 10;
 	public static int PercentChanceAlienFiresMissile = 1;
+	public static int ShipExhaust = 200;
+	public static int ShipFiringExhaustCost = 20;
 	
 	public static int ScreenWidth = 800;
 	public static int ScreenHeight = 600;
