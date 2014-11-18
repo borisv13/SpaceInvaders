@@ -6,6 +6,7 @@ public class Ship extends DualCoordinateImage implements GameMoveableObject{
 	private int deltaX;
 	private int shipSpeed = TunableParameters.ShipSpeed;
 	private int limitX;
+	private int maximumExhaust = TunableParameters.ShipExhaust;
 	private int exhaust;
 	
 	
@@ -13,7 +14,7 @@ public class Ship extends DualCoordinateImage implements GameMoveableObject{
 		super(image, x, y);
 		this.limitX = screenWidth - image.getWidth() - 10;  // Need the 10 to keep the wings on screen..not sure why yet
 		deltaX = 0;
-		exhaust = TunableParameters.ShipExhaust;
+		exhaust = maximumExhaust;
 	}
 	
 	public void startMovingLeft() {
@@ -58,6 +59,11 @@ public class Ship extends DualCoordinateImage implements GameMoveableObject{
 	}
 
 	public void regenerate() {
-		exhaust++;
+		if(exhaust < maximumExhaust)
+			exhaust++;
+	}
+	
+	public int getExhaust() {
+		return exhaust;
 	}
 }

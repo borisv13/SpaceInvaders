@@ -10,6 +10,12 @@ public class TunableParameters {
 	public static int PercentChanceAlienFiresMissile = 1;
 	public static int ShipExhaust = 200;
 	public static int ShipFiringExhaustCost = 20;
+	public static int ScoreDrawXCoordinate = 10;
+	public static int ScoreDrawYCoordinate = 10;
+	public static String ScoreDrawLabelText = "Score";
+	public static int ExhaustDrawXCoordinate = 10;
+	public static int ExhaustDrawYCoordinate = 560;
+	public static String ExhaustDrawLabelText = "Exhaust";
 	
 	public static int ScreenWidth = 800;
 	public static int ScreenHeight = 600;

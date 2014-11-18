@@ -127,4 +127,8 @@ public class GameEngine {
 	private void togglePause() {
 		pause = !pause;
 	}
+	
+	public int getExhaust() {
+		return ship.getExhaust();
+	}
 }

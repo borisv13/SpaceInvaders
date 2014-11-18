@@ -22,8 +22,8 @@ public class Painter{
 		g.drawImage(image.getImage(), image.getX(), image.getY(), panel);
 	}
 	
-	public static void drawScore(Graphics g, int score) {
+	public static void drawInt(Graphics g, String string, int score, int x, int y) {
 		g.setColor(Color.CYAN);
-		g.drawString("Score: " + score, 10, 10);
+		g.drawString(string + ": " + score, x, y);
 	}
 }
