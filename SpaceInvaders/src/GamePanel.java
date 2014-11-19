@@ -40,7 +40,10 @@ public class GamePanel extends Panel {
 		Painter.drawDualCoordinateImage(g, game.getShip(), this);
 		Painter.drawDualCoordinateImages(g, game.getShipMissiles(), this);
 		Painter.drawDualCoordinateImages(g, game.getAlienMissiles(), this);
-		Painter.drawScore(g, game.getScore());
+		Painter.drawInt(g, TunableParameters.ScoreDrawLabelText, game.getScore(), 
+				TunableParameters.ScoreDrawXCoordinate, TunableParameters.ScoreDrawYCoordinate);
+		Painter.drawInt(g, TunableParameters.ExhaustDrawLabelText, game.getExhaust(), 
+				TunableParameters.ExhaustDrawXCoordinate, TunableParameters.ExhaustDrawYCoordinate);
 
 		totalDurationNS += System.nanoTime() - startTime;
 		frameCount++;

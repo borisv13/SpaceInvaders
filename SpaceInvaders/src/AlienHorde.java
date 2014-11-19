@@ -36,11 +36,9 @@ public class AlienHorde implements GameMoveableObject {
 		return this.aliens;
 	}
 	
-	public List<Missile> randomlyGenerateMissiles(List<Missile> currentAlienMissiles) {
-		List<Missile> newAlienMissiles = currentAlienMissiles;
-		
+	public Missile randomlyGenerateMissiles() {
 		if (aliens.size() == 0)
-			return newAlienMissiles;
+			return null;
 			
 		int randomInt = randomGenerator.nextInt(100);
 		if (randomInt < TunableParameters.PercentChanceAlienFiresMissile)
@@ -52,9 +50,9 @@ public class AlienHorde implements GameMoveableObject {
 			else {
 				alienToShoot = 0;
 			}
-			newAlienMissiles.add(aliens.get(alienToShoot).fireMissile()); 
+			return aliens.get(alienToShoot).fireMissile(); 
 		}
-		return newAlienMissiles;
+		return null;
 	}
 	
 
