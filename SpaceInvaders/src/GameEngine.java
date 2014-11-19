@@ -26,11 +26,11 @@ public class GameEngine {
 		aliens = LevelCreator.getAliens(screenWidth, screenHeight);		
 		pause = true;
 		if (TunableParameters.Instrument) {
-			this.instrument = new Instrumenter(this, "EngineRun", 50);
-			this.paintInstrument = new Instrumenter(this, "Paint", 50);
+			this.instrument = new Instrumenter(this, "EngineRun");
+			this.paintInstrument = new Instrumenter(this, "Paint");
 		} else {
-			this.instrument = new NullInstrumenter(this, "EngineRun", 50);
-			this.paintInstrument = new NullInstrumenter(this, "Paint", 50);
+			this.instrument = new NullInstrumenter(this);
+			this.paintInstrument = new NullInstrumenter(this);
 		}
 	}
 	
@@ -107,6 +107,14 @@ public class GameEngine {
 	
 	int getScore() {
 		return this.gameScore;
+	}
+	
+	int getFPS() {
+		return this.instrument.getFPS();
+	}
+	
+	int getPaintFPS() {
+		return this.paintInstrument.getFPS();
 	}
 
 	synchronized void run() {		

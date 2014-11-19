@@ -1,9 +1,8 @@
 
 public class NullInstrumenter extends Instrumenter {
 
-	public NullInstrumenter(GameEngine engine, String frameType,
-			int numFramesToAverage) {
-		super(engine, frameType, numFramesToAverage);
+	public NullInstrumenter(GameEngine engine) {
+		super(engine, "");
 	}
 	
 	@Override

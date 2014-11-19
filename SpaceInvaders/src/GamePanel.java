@@ -41,6 +41,11 @@ public class GamePanel extends Panel {
 				TunableParameters.ScoreDrawXCoordinate, TunableParameters.ScoreDrawYCoordinate);
 		Painter.drawInt(g, TunableParameters.ExhaustDrawLabelText, game.getExhaust(), 
 				TunableParameters.ExhaustDrawXCoordinate, TunableParameters.ExhaustDrawYCoordinate);
+		Painter.drawInt(g, TunableParameters.FPSDrawLabelText, game.getFPS(), 
+				TunableParameters.FPSDrawXCoordinate, TunableParameters.FPSDrawYCoordinate);
+		Painter.drawInt(g, TunableParameters.PaintFPSDrawLabelText, game.getPaintFPS(), 
+				TunableParameters.PaintFPSDrawXCoordinate, TunableParameters.PaintFPSDrawYCoordinate);
+		
 		game.signalEndPaintFrame();
 	}
 	

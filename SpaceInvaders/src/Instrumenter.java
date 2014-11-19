@@ -3,16 +3,17 @@ public class Instrumenter {
 
 	private long frameCount = 0;
 	private long totalDurationNS = 0;
-	private int numFramesToAverage = 50;
+	private int numFramesToAverage = TunableParameters.InstrumentFrameGroupSize;
 	private long currentFrameStartTime = 0;
 	private GameEngine engine;
 	private String frameType;
 	private static final double nanoSecondsPerSecond = 1000000.0;
-
-	public Instrumenter(GameEngine engine, String frameType, int numFramesToAverage) {
+	private int fpsCalculationIntervalSeconds = TunableParameters.FPSCalculationIntervalSeconds;
+	private int currentFPS = 10;
+		
+	public Instrumenter(GameEngine engine, String frameType) {
 		this.engine = engine;
 		this.frameType = frameType;
-		this.numFramesToAverage = numFramesToAverage;
 	}
 	
 	public void startFrame() {
@@ -36,5 +37,9 @@ public class Instrumenter {
 			frameCount = 0;
 			totalDurationNS = 0;
 		}		
+	}
+	
+	public int getFPS() {
+		return this.currentFPS;
 	}
 }
