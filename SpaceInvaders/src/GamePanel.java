@@ -49,14 +49,14 @@ public class GamePanel extends Panel {
 		frameCount++;
 		if (frameCount % numFramesToAverage == 0) {
 			long averageDurationNS = totalDurationNS / frameCount;
-			System.out.printf(
+			/*System.out.printf(
 					"Num Aliens,%d,Num Alien Missiles,%d,Num Ship Missiles,%d,AVG Update Frame Duration in MS,%f,Num Frames for AVG Calc,%d", 
 					game.getAliens().size(), 
 					game.getAlienMissiles().size(), 
 					game.getShipMissiles().size(), 
 					averageDurationNS/1000000.0,
 					numFramesToAverage);
-			System.out.println();
+			System.out.println();*/
 			frameCount = 0;
 			totalDurationNS = 0;
 		}
