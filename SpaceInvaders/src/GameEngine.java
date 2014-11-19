@@ -14,8 +14,8 @@ public class GameEngine {
 	private int screenHeight;
 	private boolean pause;
 	private int gameScore = 0;
-	private Instrumenter instrument = new Instrumenter(this, "EngineRun", 50);
-	private Instrumenter paintInstrument = new Instrumenter(this, "Paint", 50);
+	private Instrumenter instrument;
+	private Instrumenter paintInstrument;
 	
 	GameEngine(int screenWidth, int screenHeight) {
 		this.screenWidth = screenWidth;
@@ -25,6 +25,13 @@ public class GameEngine {
 		ship.setY(screenHeight - ship.getImage().getHeight()*2);
 		aliens = LevelCreator.getAliens(screenWidth, screenHeight);		
 		pause = true;
+		if (TunableParameters.Instrument) {
+			this.instrument = new Instrumenter(this, "EngineRun", 50);
+			this.paintInstrument = new Instrumenter(this, "Paint", 50);
+		} else {
+			this.instrument = new NullInstrumenter(this, "EngineRun", 50);
+			this.paintInstrument = new NullInstrumenter(this, "Paint", 50);
+		}
 	}
 	
 	public Background getBackground() {

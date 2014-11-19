@@ -16,6 +16,7 @@ public class TunableParameters {
 	public static int ExhaustDrawXCoordinate = 10;
 	public static int ExhaustDrawYCoordinate = 560;
 	public static String ExhaustDrawLabelText = "Exhaust";
+	public static boolean Instrument = false;
 	
 	public static int ScreenWidth = 800;
 	public static int ScreenHeight = 600;
