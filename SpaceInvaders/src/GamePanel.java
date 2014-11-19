@@ -14,13 +14,11 @@ public class GamePanel extends Panel {
 	
 	private Image dbImage;
 	private GameEngine game;
-	private Instrumenter instrument;
 	
 	GamePanel(int screenWidth, int screenHeight) {
 		this.setCursor(getTransparentCursor());
 		this.setSize(screenWidth, screenHeight);
 		game = new GameEngine(screenWidth, screenHeight);
-		instrument = new Instrumenter(game, "Paint", 50);
 		repaint();
 	}
 	
@@ -29,11 +27,8 @@ public class GamePanel extends Panel {
 		return Toolkit.getDefaultToolkit().createCustomCursor(image, new Point(0, 0), "transparentCursor");
 	}
 	
-	private long frameCount = 0;
-	private long totalDurationNS = 0;
-	private int numFramesToAverage = 50;	
 	public void paint(Graphics g) {
-		instrument.startFrame();
+		game.signalStartPaintFrame();
 		super.paint(g);
 		requestFocusInWindow();
 
@@ -46,7 +41,7 @@ public class GamePanel extends Panel {
 				TunableParameters.ScoreDrawXCoordinate, TunableParameters.ScoreDrawYCoordinate);
 		Painter.drawInt(g, TunableParameters.ExhaustDrawLabelText, game.getExhaust(), 
 				TunableParameters.ExhaustDrawXCoordinate, TunableParameters.ExhaustDrawYCoordinate);
-		instrument.endFrame();
+		game.signalEndPaintFrame();
 	}
 	
 	public void update (Graphics g)

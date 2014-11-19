@@ -7,6 +7,7 @@ public class Instrumenter {
 	private long currentFrameStartTime = 0;
 	private GameEngine engine;
 	private String frameType;
+	private static final double nanoSecondsPerSecond = 1000000.0;
 
 	public Instrumenter(GameEngine engine, String frameType, int numFramesToAverage) {
 		this.engine = engine;
@@ -29,7 +30,7 @@ public class Instrumenter {
 					engine.getAliens().size(), 
 					engine.getAlienMissiles().size(), 
 					engine.getShipMissiles().size(), 
-					averageDurationNS/1000000.0,
+					averageDurationNS/nanoSecondsPerSecond,
 					numFramesToAverage);
 			System.out.println();
 			frameCount = 0;

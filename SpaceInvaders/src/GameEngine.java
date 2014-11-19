@@ -15,6 +15,7 @@ public class GameEngine {
 	private boolean pause;
 	private int gameScore = 0;
 	private Instrumenter instrument = new Instrumenter(this, "EngineRun", 50);
+	private Instrumenter paintInstrument = new Instrumenter(this, "Paint", 50);
 	
 	GameEngine(int screenWidth, int screenHeight) {
 		this.screenWidth = screenWidth;
@@ -120,6 +121,14 @@ public class GameEngine {
 			CollisionDetector.checkIfInScreen(alienMissiles, screenWidth, screenHeight);
 			instrument.endFrame();
 		}		
+	}
+	
+	public void signalStartPaintFrame() {
+		paintInstrument.startFrame();
+	}
+	
+	public void signalEndPaintFrame() {
+		paintInstrument.endFrame();
 	}
 	
 	private boolean processingOn() {
