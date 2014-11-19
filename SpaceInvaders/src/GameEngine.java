@@ -97,9 +97,12 @@ public class GameEngine {
 		return this.gameScore;
 	}
 
-	
-	synchronized void run() {
+	private long frameCount = 0;
+	private long totalDurationNS = 0;
+	private int numFramesToAverage = 50;
+	synchronized void run() {		
 		if(processingOn()) {
+			long startTime = System.nanoTime();
 			for(GameMoveableObject moveableObject : getMoveableObjects()) {
 				moveableObject.move();
 			}
@@ -110,7 +113,22 @@ public class GameEngine {
 			
 			CollisionDetector.checkIfInScreen(shipMissiles, screenWidth, screenHeight);
 			CollisionDetector.checkIfInScreen(alienMissiles, screenWidth, screenHeight);
-		}
+			totalDurationNS += System.nanoTime() - startTime;
+			frameCount++;
+			if (frameCount % numFramesToAverage == 0) {
+				long averageDurationNS = totalDurationNS / frameCount;
+				/*System.out.printf(
+						"Num Aliens,%d,Num Alien Missiles,%d,Num Ship Missiles,%d,AVG Update Frame Duration in MS,%f,Num Frames for AVG Calc,%d", 
+						aliens.getAliens().size(), 
+						alienMissiles.size(), 
+						shipMissiles.size(), 
+						averageDurationNS/1000000.0,
+						numFramesToAverage);*/
+				//System.out.println();
+				frameCount = 0;
+				totalDurationNS = 0;
+			}
+		}		
 	}
 	
 	private boolean processingOn() {

@@ -27,7 +27,11 @@ public class GamePanel extends Panel {
 		return Toolkit.getDefaultToolkit().createCustomCursor(image, new Point(0, 0), "transparentCursor");
 	}
 	
+	private long frameCount = 0;
+	private long totalDurationNS = 0;
+	private int numFramesToAverage = 50;	
 	public void paint(Graphics g) {
+		long startTime = System.nanoTime();
 		super.paint(g);
 		requestFocusInWindow();
 
@@ -37,6 +41,22 @@ public class GamePanel extends Panel {
 		Painter.drawDualCoordinateImages(g, game.getShipMissiles(), this);
 		Painter.drawDualCoordinateImages(g, game.getAlienMissiles(), this);
 		Painter.drawScore(g, game.getScore());
+
+		totalDurationNS += System.nanoTime() - startTime;
+		frameCount++;
+		if (frameCount % numFramesToAverage == 0) {
+			long averageDurationNS = totalDurationNS / frameCount;
+			System.out.printf(
+					"Num Aliens,%d,Num Alien Missiles,%d,Num Ship Missiles,%d,AVG Update Frame Duration in MS,%f,Num Frames for AVG Calc,%d", 
+					game.getAliens().size(), 
+					game.getAlienMissiles().size(), 
+					game.getShipMissiles().size(), 
+					averageDurationNS/1000000.0,
+					numFramesToAverage);
+			System.out.println();
+			frameCount = 0;
+			totalDurationNS = 0;
+		}
 	}
 	
 	public void update (Graphics g)
