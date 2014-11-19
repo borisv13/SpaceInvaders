@@ -3,17 +3,18 @@ public class Instrumenter {
 
 	private long frameCount = 0;
 	private long totalDurationNS = 0;
-	private int numFramesToAverage = TunableParameters.InstrumentFrameGroupSize;
 	private long currentFrameStartTime = 0;
 	private GameEngine engine;
 	private String frameType;
-	private static final double nanoSecondsPerSecond = 1000000.0;
-	private int fpsCalculationIntervalSeconds = TunableParameters.FPSCalculationIntervalSeconds;
-	private int currentFPS = 10;
+	private static final long nanoSecondsPerSecond = 1000000000;
+	private long fpsCalculationIntervalNanoSeconds = TunableParameters.FPSCalculationIntervalSeconds * nanoSecondsPerSecond;
+	private int currentFPS = 0;
+	private long fpsStartTime;
 		
 	public Instrumenter(GameEngine engine, String frameType) {
 		this.engine = engine;
 		this.frameType = frameType;
+		this.fpsStartTime = System.nanoTime();		
 	}
 	
 	public void startFrame() {
@@ -22,21 +23,25 @@ public class Instrumenter {
 	
 	public void endFrame() {
 		totalDurationNS += System.nanoTime() - currentFrameStartTime;
-		frameCount++;
-		if (frameCount % numFramesToAverage == 0) {
+		frameCount++;		
+		long durationSincefpsStartNS = System.nanoTime() - this.fpsStartTime;
+		if (durationSincefpsStartNS >= fpsCalculationIntervalNanoSeconds) {
+			currentFPS = (int) (frameCount / (durationSincefpsStartNS / nanoSecondsPerSecond));
 			long averageDurationNS = totalDurationNS / frameCount;
 			System.out.printf(
-					"Frame Type,%s,Num Aliens,%d,Num Alien Missiles,%d,Num Ship Missiles,%d,AVG Frame Duration in MS,%f,Num Frames for AVG Calc,%d", 
+					"Frame Type,%s,Num Aliens,%d,Num Alien Missiles,%d,Num Ship Missiles,%d,AVG Frame Duration in MS,%d,Num Frames,%d,FPS,%d", 
 					this.frameType,
 					engine.getAliens().size(), 
 					engine.getAlienMissiles().size(), 
 					engine.getShipMissiles().size(), 
 					averageDurationNS/nanoSecondsPerSecond,
-					numFramesToAverage);
+					frameCount,
+					currentFPS);
 			System.out.println();
 			frameCount = 0;
 			totalDurationNS = 0;
-		}		
+			this.fpsStartTime = System.nanoTime();
+		}
 	}
 	
 	public int getFPS() {

@@ -17,7 +17,6 @@ public class TunableParameters {
 	public static int ExhaustDrawYCoordinate = 560;
 	public static String ExhaustDrawLabelText = "Exhaust";
 	public static boolean Instrument = true;
-	public static int InstrumentFrameGroupSize = 50;
 	public static int FPSCalculationIntervalSeconds = 5;
 	public static int FPSDrawXCoordinate = 700;
 	public static int FPSDrawYCoordinate = 10;
