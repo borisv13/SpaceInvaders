@@ -14,11 +14,13 @@ public class GamePanel extends Panel {
 	
 	private Image dbImage;
 	private GameEngine game;
+	private Instrumenter instrument;
 	
 	GamePanel(int screenWidth, int screenHeight) {
 		this.setCursor(getTransparentCursor());
 		this.setSize(screenWidth, screenHeight);
 		game = new GameEngine(screenWidth, screenHeight);
+		instrument = new Instrumenter(game, "Paint", 50);
 		repaint();
 	}
 	
@@ -31,7 +33,7 @@ public class GamePanel extends Panel {
 	private long totalDurationNS = 0;
 	private int numFramesToAverage = 50;	
 	public void paint(Graphics g) {
-		long startTime = System.nanoTime();
+		instrument.startFrame();
 		super.paint(g);
 		requestFocusInWindow();
 
@@ -44,22 +46,7 @@ public class GamePanel extends Panel {
 				TunableParameters.ScoreDrawXCoordinate, TunableParameters.ScoreDrawYCoordinate);
 		Painter.drawInt(g, TunableParameters.ExhaustDrawLabelText, game.getExhaust(), 
 				TunableParameters.ExhaustDrawXCoordinate, TunableParameters.ExhaustDrawYCoordinate);
-
-		totalDurationNS += System.nanoTime() - startTime;
-		frameCount++;
-		if (frameCount % numFramesToAverage == 0) {
-			long averageDurationNS = totalDurationNS / frameCount;
-			/*System.out.printf(
-					"Num Aliens,%d,Num Alien Missiles,%d,Num Ship Missiles,%d,AVG Update Frame Duration in MS,%f,Num Frames for AVG Calc,%d", 
-					game.getAliens().size(), 
-					game.getAlienMissiles().size(), 
-					game.getShipMissiles().size(), 
-					averageDurationNS/1000000.0,
-					numFramesToAverage);
-			System.out.println();*/
-			frameCount = 0;
-			totalDurationNS = 0;
-		}
+		instrument.endFrame();
 	}
 	
 	public void update (Graphics g)
