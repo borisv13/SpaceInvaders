@@ -117,7 +117,7 @@ public class GameEngine {
 		return this.paintInstrument.getFPS();
 	}
 
-	synchronized void run() {		
+	synchronized boolean run() {		
 		if(processingOn()) {
 			instrument.startFrame();
 			for(GameMoveableObject moveableObject : getMoveableObjects()) {
@@ -134,8 +134,16 @@ public class GameEngine {
 			
 			CollisionDetector.checkIfInScreen(shipMissiles, screenWidth, screenHeight);
 			CollisionDetector.checkIfInScreen(alienMissiles, screenWidth, screenHeight);
+			
+			boolean gameOver = false;
+			if(aliens.getAliens().size() == 0) {
+				gameOver = true;
+			}
+			
 			instrument.endFrame();
-		}		
+			return gameOver;
+		}
+		return false;
 	}
 	
 	public void signalStartPaintFrame() {
