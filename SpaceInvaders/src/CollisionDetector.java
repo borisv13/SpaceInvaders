@@ -5,22 +5,22 @@ import java.util.List;
 
 public class CollisionDetector {
 	
-	public static int checkShipMissilesAndAliens(List<Alien> aliens, List<Missile> shipMissiles) {
-		int numAliensAlive = aliens.size();
-		for(Iterator<Alien> alienIterator = aliens.iterator(); alienIterator.hasNext();) {
-			DualCoordinateImage alien = alienIterator.next();
-			Rectangle alienRect = createNewRect(alien);
-			for(Iterator<Missile> shipMissileIterator = shipMissiles.iterator(); shipMissileIterator.hasNext();) {
-				DualCoordinateImage shipMissile = shipMissileIterator.next();
-				Rectangle shipMissileRect = createNewRect(shipMissile);
-				if(alienRect.intersects(shipMissileRect)) {
-					alienIterator.remove();
-					shipMissileIterator.remove();
+	public static int checkShipMissilesAndAliens(List<? extends DualCoordinateImage> imagesOne, List<? extends DualCoordinateImage> imagesTwo) {
+		int numAliensAlive = imagesOne.size();
+		for(Iterator<? extends DualCoordinateImage> imagesOneIterator = imagesOne.iterator(); imagesOneIterator.hasNext();) {
+			DualCoordinateImage imageOne = imagesOneIterator.next();
+			Rectangle imageOneRect = createNewRect(imageOne);
+			for(Iterator<? extends DualCoordinateImage> imagesTwoIterator = imagesTwo.iterator(); imagesTwoIterator.hasNext();) {
+				DualCoordinateImage imageTwo = imagesTwoIterator.next();
+				Rectangle imageTwoRect = createNewRect(imageTwo);
+				if(imageOneRect.intersects(imageTwoRect)) {
+					imagesOneIterator.remove();
+					imagesTwoIterator.remove();
 					break;
 				}
 			}
 		}
-		return numAliensAlive - aliens.size();
+		return numAliensAlive - imagesOne.size();
 	}
 	
 	public static void checkIfInScreen(List<? extends DualCoordinateImage> images, int screenWidth, int screenHeight) {
