@@ -128,9 +128,11 @@ public class GameEngine {
 			if(newMissile != null) {
 				alienMissiles.add(newMissile);
 			}
-						
-			int numAliensKilled = CollisionDetector.checkShipMissilesAndAliens(aliens.getAliens(), shipMissiles);			
-			this.incrementScore(TunableParameters.AlienScore * numAliensKilled);
+			
+			int numberOfAliens = aliens.getAliens().size();
+			CollisionDetector.detectCollisionsAndRemoveTwoListsOfImages(aliens.getAliens(), shipMissiles);
+			int numberOfAliensKilled = numberOfAliens - aliens.getAliens().size();
+			this.incrementScore(TunableParameters.AlienScore * numberOfAliensKilled);
 			
 			CollisionDetector.checkIfInScreen(shipMissiles, screenWidth, screenHeight);
 			CollisionDetector.checkIfInScreen(alienMissiles, screenWidth, screenHeight);
