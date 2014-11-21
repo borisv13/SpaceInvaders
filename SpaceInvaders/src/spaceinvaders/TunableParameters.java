@@ -1,3 +1,4 @@
+package spaceinvaders;
 
 public class TunableParameters {
 	public static int ReferenceSpeed;

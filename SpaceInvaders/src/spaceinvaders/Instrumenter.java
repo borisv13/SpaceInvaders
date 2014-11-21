@@ -1,3 +1,4 @@
+package spaceinvaders;
 
 public class Instrumenter {
 

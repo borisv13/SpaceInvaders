@@ -1,3 +1,4 @@
+package spaceinvaders;
 import java.awt.Cursor;
 import java.awt.Event;
 import java.awt.Graphics;

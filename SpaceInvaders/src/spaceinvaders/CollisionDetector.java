@@ -1,3 +1,4 @@
+package spaceinvaders;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Iterator;
