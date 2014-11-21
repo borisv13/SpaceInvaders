@@ -112,39 +112,54 @@ public class GameEngine {
 		return this.paintInstrument.getFPS();
 	}
 
+	private void moveObjects() {
+		for(GameMoveableObject moveableObject : getMoveableObjects()) {
+			moveableObject.move();
+		}
+	}
+	
+	private void conditionallyAddMissile() {
+		Missile newMissile = aliens.randomlyGenerateMissiles();
+		if(newMissile != null) {
+			alienMissiles.add(newMissile);
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	private void checkForKilledAliens() {
+		int numberOfAliens = aliens.getAliens().size();
+		List<List<? extends DualCoordinateImage>> listOfListOfImages = 
+			CollisionDetector.detectCollisionsAndRemoveTwoListsOfImages(aliens.getAliens(), shipMissiles);
+		aliens.setAliens((List<Alien>) listOfListOfImages.get(0));
+		shipMissiles = (List<Missile>) listOfListOfImages.get(1);
+		int numberOfAliensKilled = numberOfAliens - aliens.getAliens().size();
+		this.incrementScore(TunableParameters.AlienScore * numberOfAliensKilled);
+	}
+	
 	@SuppressWarnings("unchecked")
 	synchronized boolean run() {		
 		if(processingOn()) {
 			instrument.startFrame();
-			for(GameMoveableObject moveableObject : getMoveableObjects()) {
-				moveableObject.move();
-			}
+			moveObjects();
 			ship.regenerate();
-			Missile newMissile = aliens.randomlyGenerateMissiles();
-			if(newMissile != null) {
-				alienMissiles.add(newMissile);
-			}
+			checkForKilledAliens();
+			conditionallyAddMissile();
+			shipMissiles = (List<Missile>) CollisionDetector.checkIfInScreen(shipMissiles, screenWidth, screenHeight);
+			alienMissiles = (List<Missile>) CollisionDetector.checkIfInScreen(alienMissiles, screenWidth, screenHeight);
 			
-			int numberOfAliens = aliens.getAliens().size();
-			List<List<? extends DualCoordinateImage>> listOfListOfImages = 
-				CollisionDetector.detectCollisionsAndRemoveTwoListsOfImages(aliens.getAliens(), shipMissiles);
-			aliens.setAliens((List<Alien>) listOfListOfImages.get(0));
-			shipMissiles = (List<Missile>) listOfListOfImages.get(1);
-			int numberOfAliensKilled = numberOfAliens - aliens.getAliens().size();
-			this.incrementScore(TunableParameters.AlienScore * numberOfAliensKilled);
-			
-			CollisionDetector.checkIfInScreen(shipMissiles, screenWidth, screenHeight);
-			CollisionDetector.checkIfInScreen(alienMissiles, screenWidth, screenHeight);
-			
-			boolean gameOver = false;
-			if(aliens.getAliens().size() == 0) {
-				gameOver = true;
-			}
-			
-			instrument.endFrame();
-			return gameOver;
+			return gameOver();
 		}
 		return false;
+	}
+	
+	private boolean gameOver() {
+		boolean gameOver = false;
+		if(aliens.getAliens().size() == 0) {
+			gameOver = true;
+		}
+		
+		instrument.endFrame();
+		return gameOver;
 	}
 	
 	public void signalStartPaintFrame() {

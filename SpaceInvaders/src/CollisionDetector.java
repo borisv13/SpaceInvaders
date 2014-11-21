@@ -28,15 +28,17 @@ public class CollisionDetector {
 		return listOfListOfImages;
 	}
 	
-	public static void checkIfInScreen(List<? extends DualCoordinateImage> images, int screenWidth, int screenHeight) {
+	public static List<? extends DualCoordinateImage> checkIfInScreen(List<? extends DualCoordinateImage> images, int screenWidth, int screenHeight) {
+		List<? extends DualCoordinateImage> localImages = images;
 		Rectangle screen = new Rectangle(0, 0, screenWidth, screenHeight);
-		for(Iterator<? extends DualCoordinateImage> imageIterator = images.iterator(); imageIterator.hasNext();) {
+		for(Iterator<? extends DualCoordinateImage> imageIterator = localImages.iterator(); imageIterator.hasNext();) {
 			DualCoordinateImage image = imageIterator.next();
 			Rectangle imageRect = createNewRect(image);
 			if(!screen.intersects(imageRect)) {
 				imageIterator.remove();
 			}
 		}
+		return localImages;
 	}
 	
 	private static Rectangle createNewRect(DualCoordinateImage image) { 
