@@ -129,10 +129,10 @@ public class GameEngine {
 	private void checkForKilledAliens() {
 		int numberOfAliens = aliens.getAliens().size();
 		List<List<? extends DualCoordinateImage>> listOfListOfImages = 
-			CollisionDetector.detectCollisionsAndRemoveTwoListsOfImages(aliens.getAliens(), shipMissiles);
+			CollisionDetector.detectCollisionsAndRemoveTwoListsOfImages(getAliens(), shipMissiles);
 		aliens.setAliens((List<Alien>) listOfListOfImages.get(0));
 		shipMissiles = (List<Missile>) listOfListOfImages.get(1);
-		int numberOfAliensKilled = numberOfAliens - aliens.getAliens().size();
+		int numberOfAliensKilled = numberOfAliens - getAliens().size();
 		this.incrementScore(TunableParameters.AlienScore * numberOfAliensKilled);
 	}
 	
@@ -147,6 +147,7 @@ public class GameEngine {
 			shipMissiles = (List<Missile>) CollisionDetector.checkIfInScreen(shipMissiles, screenWidth, screenHeight);
 			alienMissiles = (List<Missile>) CollisionDetector.checkIfInScreen(alienMissiles, screenWidth, screenHeight);
 			
+			instrument.endFrame();
 			return gameOver();
 		}
 		return false;
@@ -157,8 +158,13 @@ public class GameEngine {
 		if(aliens.getAliens().size() == 0) {
 			gameOver = true;
 		}
+		if(!gameOver) {
+			gameOver = CollisionDetector.checkIfImageCollidesWithListOfImages(ship, getAliens());
+		}
+		if(!gameOver) {
+			gameOver = CollisionDetector.checkIfImageCollidesWithListOfImages(ship, alienMissiles);
+		}
 		
-		instrument.endFrame();
 		return gameOver;
 	}
 	

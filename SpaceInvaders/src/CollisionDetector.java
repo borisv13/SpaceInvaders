@@ -41,6 +41,20 @@ public class CollisionDetector {
 		return localImages;
 	}
 	
+	public static boolean checkIfImageCollidesWithListOfImages(DualCoordinateImage imageToCheck, List<? extends DualCoordinateImage> images) {
+		List<? extends DualCoordinateImage> localImages = images;
+		Rectangle imageToCheckRect = createNewRect(imageToCheck);
+		for(Iterator<? extends DualCoordinateImage> imageIterator = localImages.iterator(); imageIterator.hasNext();) {
+			DualCoordinateImage image = imageIterator.next();
+			Rectangle imageRect = createNewRect(image);
+			if(imageToCheckRect.intersects(imageRect)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
 	private static Rectangle createNewRect(DualCoordinateImage image) { 
 		return new Rectangle(image.getX(), image.getY(), image.getImage().getWidth(), image.getImage().getHeight());
 	}
