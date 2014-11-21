@@ -112,6 +112,7 @@ public class GameEngine {
 		return this.paintInstrument.getFPS();
 	}
 
+	@SuppressWarnings("unchecked")
 	synchronized boolean run() {		
 		if(processingOn()) {
 			instrument.startFrame();
@@ -125,7 +126,10 @@ public class GameEngine {
 			}
 			
 			int numberOfAliens = aliens.getAliens().size();
-			CollisionDetector.detectCollisionsAndRemoveTwoListsOfImages(aliens.getAliens(), shipMissiles);
+			List<List<? extends DualCoordinateImage>> listOfListOfImages = 
+				CollisionDetector.detectCollisionsAndRemoveTwoListsOfImages(aliens.getAliens(), shipMissiles);
+			aliens.setAliens((List<Alien>) listOfListOfImages.get(0));
+			shipMissiles = (List<Missile>) listOfListOfImages.get(1);
 			int numberOfAliensKilled = numberOfAliens - aliens.getAliens().size();
 			this.incrementScore(TunableParameters.AlienScore * numberOfAliensKilled);
 			

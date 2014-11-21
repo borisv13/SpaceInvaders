@@ -36,6 +36,10 @@ public class AlienHorde implements GameMoveableObject {
 		return this.aliens;
 	}
 	
+	public void setAliens(List<Alien> aliens) {
+		this.aliens = aliens;
+	}
+	
 	public Missile randomlyGenerateMissiles() {
 		if (aliens.size() == 0)
 			return null;
