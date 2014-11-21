@@ -28,16 +28,19 @@ public class Instrumenter {
 		if (durationSincefpsStartNS >= fpsCalculationIntervalNanoSeconds) {
 			currentFPS = (int) (frameCount / (durationSincefpsStartNS / nanoSecondsPerSecond));
 			long averageDurationNS = totalDurationNS / frameCount;
-			System.out.printf(
-					"Frame Type,%s,Num Aliens,%d,Num Alien Missiles,%d,Num Ship Missiles,%d,AVG Frame Duration in MS,%d,Num Frames,%d,FPS,%d", 
-					this.frameType,
-					engine.getAliens().size(), 
-					engine.getAlienMissiles().size(), 
-					engine.getShipMissiles().size(), 
-					averageDurationNS/nanoSecondsPerSecond,
-					frameCount,
-					currentFPS);
-			System.out.println();
+			if (TunableParameters.Instrument)
+			{
+				System.out.printf(
+						"Frame Type,%s,Num Aliens,%d,Num Alien Missiles,%d,Num Ship Missiles,%d,AVG Frame Duration in MS,%d,Num Frames,%d,FPS,%d", 
+						this.frameType,
+						engine.getAliens().size(), 
+						engine.getAlienMissiles().size(), 
+						engine.getShipMissiles().size(), 
+						averageDurationNS/nanoSecondsPerSecond,
+						frameCount,
+						currentFPS);
+				System.out.println();
+			}
 			frameCount = 0;
 			totalDurationNS = 0;
 			this.fpsStartTime = System.nanoTime();
