@@ -1,3 +1,4 @@
+package spaceinvaders;
 import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 
@@ -25,7 +26,7 @@ public class GameFrame extends Frame {
 		});
 	}
 	
-	public void run() {
-		gamePanel.run();
+	public boolean run() {
+		return gamePanel.run();
 	}
 }

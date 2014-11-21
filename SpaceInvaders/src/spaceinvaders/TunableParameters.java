@@ -1,3 +1,4 @@
+package spaceinvaders;
 
 public class TunableParameters {
 	public static int ReferenceSpeed;
@@ -16,6 +17,14 @@ public class TunableParameters {
 	public static int ExhaustDrawXCoordinate = 10;
 	public static int ExhaustDrawYCoordinate = 560;
 	public static String ExhaustDrawLabelText = "Exhaust";
+	public static boolean Instrument = false;
+	public static int FPSCalculationIntervalSeconds = 5;
+	public static int FPSDrawXCoordinate = 700;
+	public static int FPSDrawYCoordinate = 10;
+	public static String FPSDrawLabelText = "FPS";
+	public static int PaintFPSDrawXCoordinate = 700;
+	public static int PaintFPSDrawYCoordinate = 20;
+	public static String PaintFPSDrawLabelText = "PFPS";
 	
 	public static int ScreenWidth = 800;
 	public static int ScreenHeight = 600;

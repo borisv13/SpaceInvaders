@@ -1,3 +1,4 @@
+package spaceinvaders;
 import java.util.List;
 import java.util.Random;
 
@@ -34,6 +35,10 @@ public class AlienHorde implements GameMoveableObject {
 	
 	public List<Alien> getAliens(){
 		return this.aliens;
+	}
+	
+	public void setAliens(List<Alien> aliens) {
+		this.aliens = aliens;
 	}
 	
 	public Missile randomlyGenerateMissiles() {

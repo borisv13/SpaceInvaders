@@ -1,3 +1,4 @@
+package spaceinvaders;
 import java.awt.image.BufferedImage;
 
 

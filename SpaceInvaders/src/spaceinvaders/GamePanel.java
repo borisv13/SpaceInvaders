@@ -1,3 +1,4 @@
+package spaceinvaders;
 import java.awt.Cursor;
 import java.awt.Event;
 import java.awt.Graphics;
@@ -27,11 +28,8 @@ public class GamePanel extends Panel {
 		return Toolkit.getDefaultToolkit().createCustomCursor(image, new Point(0, 0), "transparentCursor");
 	}
 	
-	private long frameCount = 0;
-	private long totalDurationNS = 0;
-	private int numFramesToAverage = 50;	
 	public void paint(Graphics g) {
-		long startTime = System.nanoTime();
+		game.signalStartPaintFrame();
 		super.paint(g);
 		requestFocusInWindow();
 
@@ -44,22 +42,12 @@ public class GamePanel extends Panel {
 				TunableParameters.ScoreDrawXCoordinate, TunableParameters.ScoreDrawYCoordinate);
 		Painter.drawInt(g, TunableParameters.ExhaustDrawLabelText, game.getExhaust(), 
 				TunableParameters.ExhaustDrawXCoordinate, TunableParameters.ExhaustDrawYCoordinate);
-
-		totalDurationNS += System.nanoTime() - startTime;
-		frameCount++;
-		if (frameCount % numFramesToAverage == 0) {
-			long averageDurationNS = totalDurationNS / frameCount;
-			/*System.out.printf(
-					"Num Aliens,%d,Num Alien Missiles,%d,Num Ship Missiles,%d,AVG Update Frame Duration in MS,%f,Num Frames for AVG Calc,%d", 
-					game.getAliens().size(), 
-					game.getAlienMissiles().size(), 
-					game.getShipMissiles().size(), 
-					averageDurationNS/1000000.0,
-					numFramesToAverage);
-			System.out.println();*/
-			frameCount = 0;
-			totalDurationNS = 0;
-		}
+		Painter.drawInt(g, TunableParameters.FPSDrawLabelText, game.getFPS(), 
+				TunableParameters.FPSDrawXCoordinate, TunableParameters.FPSDrawYCoordinate);
+		Painter.drawInt(g, TunableParameters.PaintFPSDrawLabelText, game.getPaintFPS(), 
+				TunableParameters.PaintFPSDrawXCoordinate, TunableParameters.PaintFPSDrawYCoordinate);
+		
+		game.signalEndPaintFrame();
 	}
 	
 	public void update (Graphics g)
@@ -100,8 +88,9 @@ public class GamePanel extends Panel {
 		return true;
 	}
 	
-	public void run() {
-		game.run();
+	public boolean run() {
+		boolean gameOver = game.run();
 		repaint();
+		return gameOver;
 	}
 }

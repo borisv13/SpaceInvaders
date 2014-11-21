@@ -1,3 +1,4 @@
+package spaceinvaders;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -14,6 +15,8 @@ public class GameEngine {
 	private int screenHeight;
 	private boolean pause;
 	private int gameScore = 0;
+	private Instrumenter instrument;
+	private Instrumenter paintInstrument;
 	
 	GameEngine(int screenWidth, int screenHeight) {
 		this.screenWidth = screenWidth;
@@ -23,6 +26,8 @@ public class GameEngine {
 		ship.setY(screenHeight - ship.getImage().getHeight()*2);
 		aliens = LevelCreator.getAliens(screenWidth, screenHeight);		
 		pause = true;
+		this.instrument = new Instrumenter(this, "EngineRun");
+		this.paintInstrument = new Instrumenter(this, "Paint");
 	}
 	
 	public Background getBackground() {
@@ -99,43 +104,77 @@ public class GameEngine {
 	int getScore() {
 		return this.gameScore;
 	}
+	
+	int getFPS() {
+		return this.instrument.getFPS();
+	}
+	
+	int getPaintFPS() {
+		return this.paintInstrument.getFPS();
+	}
 
-	private long frameCount = 0;
-	private long totalDurationNS = 0;
-	private int numFramesToAverage = 50;
-	synchronized void run() {		
+	private void moveObjects() {
+		for(GameMoveableObject moveableObject : getMoveableObjects()) {
+			moveableObject.move();
+		}
+	}
+	
+	private void conditionallyAddMissile() {
+		Missile newMissile = aliens.randomlyGenerateMissiles();
+		if(newMissile != null) {
+			alienMissiles.add(newMissile);
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	private void checkForKilledAliens() {
+		int numberOfAliens = aliens.getAliens().size();
+		List<List<? extends DualCoordinateImage>> listOfListOfImages = 
+			CollisionDetector.detectCollisionsAndRemoveTwoListsOfImages(getAliens(), shipMissiles);
+		aliens.setAliens((List<Alien>) listOfListOfImages.get(0));
+		shipMissiles = (List<Missile>) listOfListOfImages.get(1);
+		int numberOfAliensKilled = numberOfAliens - getAliens().size();
+		this.incrementScore(TunableParameters.AlienScore * numberOfAliensKilled);
+	}
+	
+	@SuppressWarnings("unchecked")
+	synchronized boolean run() {		
 		if(processingOn()) {
-			long startTime = System.nanoTime();
-			for(GameMoveableObject moveableObject : getMoveableObjects()) {
-				moveableObject.move();
-			}
+			instrument.startFrame();
+			moveObjects();
 			ship.regenerate();
-			Missile newMissile = aliens.randomlyGenerateMissiles();
-			if(newMissile != null) {
-				alienMissiles.add(newMissile);
-			}
-						
-			int numAliensKilled = CollisionDetector.checkShipMissilesAndAliens(aliens.getAliens(), shipMissiles);			
-			this.incrementScore(TunableParameters.AlienScore * numAliensKilled);
+			checkForKilledAliens();
+			conditionallyAddMissile();
+			shipMissiles = (List<Missile>) CollisionDetector.checkIfInScreen(shipMissiles, screenWidth, screenHeight);
+			alienMissiles = (List<Missile>) CollisionDetector.checkIfInScreen(alienMissiles, screenWidth, screenHeight);
 			
-			CollisionDetector.checkIfInScreen(shipMissiles, screenWidth, screenHeight);
-			CollisionDetector.checkIfInScreen(alienMissiles, screenWidth, screenHeight);
-			totalDurationNS += System.nanoTime() - startTime;
-			frameCount++;
-			if (frameCount % numFramesToAverage == 0) {
-				long averageDurationNS = totalDurationNS / frameCount;
-				/*System.out.printf(
-						"Num Aliens,%d,Num Alien Missiles,%d,Num Ship Missiles,%d,AVG Update Frame Duration in MS,%f,Num Frames for AVG Calc,%d", 
-						aliens.getAliens().size(), 
-						alienMissiles.size(), 
-						shipMissiles.size(), 
-						averageDurationNS/1000000.0,
-						numFramesToAverage);*/
-				//System.out.println();
-				frameCount = 0;
-				totalDurationNS = 0;
-			}
-		}		
+			instrument.endFrame();
+			return gameOver();
+		}
+		return false;
+	}
+	
+	private boolean gameOver() {
+		boolean gameOver = false;
+		if(aliens.getAliens().size() == 0) {
+			gameOver = true;
+		}
+		if(!gameOver) {
+			gameOver = CollisionDetector.checkIfImageCollidesWithListOfImages(ship, getAliens());
+		}
+		if(!gameOver) {
+			gameOver = CollisionDetector.checkIfImageCollidesWithListOfImages(ship, alienMissiles);
+		}
+		
+		return gameOver;
+	}
+	
+	public void signalStartPaintFrame() {
+		paintInstrument.startFrame();
+	}
+	
+	public void signalEndPaintFrame() {
+		paintInstrument.endFrame();
 	}
 	
 	private boolean processingOn() {
