@@ -139,8 +139,9 @@ public class GameEngine {
 	
 	@SuppressWarnings("unchecked")
 	synchronized boolean run() {		
+		instrument.startFrame();
+		boolean isGameOver = false;
 		if(processingOn()) {
-			instrument.startFrame();
 			moveObjects();
 			ship.regenerate();
 			checkForKilledAliens();
@@ -148,10 +149,10 @@ public class GameEngine {
 			shipMissiles = (List<Missile>) CollisionDetector.checkIfInScreen(shipMissiles, screenWidth, screenHeight);
 			alienMissiles = (List<Missile>) CollisionDetector.checkIfInScreen(alienMissiles, screenWidth, screenHeight);
 			
-			instrument.endFrame();
-			return gameOver();
+			isGameOver = gameOver();
 		}
-		return false;
+		instrument.endFrame();
+		return isGameOver;
 	}
 	
 	private boolean gameOver() {
