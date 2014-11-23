@@ -5,8 +5,11 @@ public class TunableParameters {
 	public static int ShipSpeed;
 	public static int BackgroundSpeed;
 	public static int AlienSpeed;
+	public static int AlienSpeedMax;
 	public static int AlienVerticalSpeed;
 	public static int MissileSpeed = 3;
+	public static int NumRowsDropToIncreaseAlienSpeed = 2;
+	public static int AlienSpeedIncreaseIncrement = 1;
 	public static int AlienScore = 10;
 	public static int PercentChanceAlienFiresMissile = 1;
 	public static int ShipExhaust = 200;
@@ -41,6 +44,7 @@ public class TunableParameters {
 			TunableParameters.ShipSpeed = newSpeed * 2;
 			TunableParameters.BackgroundSpeed = newSpeed;
 			TunableParameters.AlienSpeed = newSpeed * 2;
+			TunableParameters.AlienSpeedMax = AlienSpeed * 4;
 			TunableParameters.AlienVerticalSpeed = newSpeed * 10;
 	}
 		
