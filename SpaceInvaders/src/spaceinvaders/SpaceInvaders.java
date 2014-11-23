@@ -23,6 +23,7 @@ public class SpaceInvaders implements Runnable {
 				e.printStackTrace();
 			}
 			if(this.gameFrame.run()) {
+				gameFrame.dispose();
 				gameFrame = new GameFrame();
 			}
 			
