@@ -47,6 +47,10 @@ public class GamePanel extends Panel {
 		Painter.drawInt(g, TunableParameters.PaintFPSDrawLabelText, game.getPaintFPS(), 
 				TunableParameters.PaintFPSDrawXCoordinate, TunableParameters.PaintFPSDrawYCoordinate);
 		
+		if (!game.processingOn()) {
+			Painter.drawMessage(g, TunableParameters.PausedText, TunableParameters.PausedXCoordinate, TunableParameters.PausedYCoordinate);
+		}
+		
 		game.signalEndPaintFrame();
 	}
 	

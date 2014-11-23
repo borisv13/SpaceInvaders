@@ -25,6 +25,9 @@ public class TunableParameters {
 	public static int PaintFPSDrawXCoordinate = 700;
 	public static int PaintFPSDrawYCoordinate = 20;
 	public static String PaintFPSDrawLabelText = "PFPS";
+	public static String PausedText = "Paused - press spacebar to play";
+	public static int PausedXCoordinate = 250;
+	public static int PausedYCoordinate = 300;
 	
 	public static int ScreenWidth = 800;
 	public static int ScreenHeight = 600;

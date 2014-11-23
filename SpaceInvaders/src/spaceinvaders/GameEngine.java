@@ -177,7 +177,7 @@ public class GameEngine {
 		paintInstrument.endFrame();
 	}
 	
-	private boolean processingOn() {
+	public boolean processingOn() {
 		return !pause;
 	}
 	
