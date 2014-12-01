@@ -7,7 +7,11 @@ public abstract class Missile extends DualCoordinateImage implements GameMoveabl
 	Missile(BufferedImage image, int x, int y) {
 		super(image, x, y);
 	}
-	
+
+	Missile(Missile source) {
+		super(source);
+	}
+
 	abstract public void move();
 	
 	public int getCenterRelativeXCoordinate(int relativeObjectX, int relativeObjectWidth) {

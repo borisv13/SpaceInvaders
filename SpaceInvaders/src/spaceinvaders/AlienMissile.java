@@ -8,6 +8,10 @@ public class AlienMissile extends Missile{
 		super(image, x, y);
 	}
 	
+	AlienMissile(AlienMissile source) {
+		super(source);
+	}
+	
 	public void move() {
 		y += getImage().getHeight() / TunableParameters.MissileSpeed;
 	}

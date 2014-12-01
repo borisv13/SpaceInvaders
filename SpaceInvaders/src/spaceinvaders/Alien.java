@@ -16,6 +16,14 @@ public class Alien extends DualCoordinateImage{
 		this.screenWidth = screenWidth;
 	}
 	
+	Alien(Alien source) {
+		super(source);
+		this.screenWidth = source.screenWidth;
+		this.imageWidth = source.imageWidth;
+		this.imageHeight = source.imageHeight;
+		this.movingRight = source.movingRight;
+	}
+	
 	public void move(int deltaX, int deltaY) {
 		x += deltaX;
 		y += deltaY;

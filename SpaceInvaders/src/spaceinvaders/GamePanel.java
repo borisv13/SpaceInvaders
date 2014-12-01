@@ -32,12 +32,12 @@ public class GamePanel extends Panel {
 		game.signalStartPaintFrame();
 		super.paint(g);
 		requestFocusInWindow();
-
-		Painter.drawBackground(g, game.getBackground(), this);
-		Painter.drawDualCoordinateImages(g, game.getAliens(), this);
-		Painter.drawDualCoordinateImage(g, game.getShip(), this);
-		Painter.drawDualCoordinateImages(g, game.getShipMissiles(), this);
-		Painter.drawDualCoordinateImages(g, game.getAlienMissiles(), this);
+		GameState currentGameState = game.getCurrentGameState();
+		Painter.drawBackground(g, currentGameState.getBackground(), this);
+		Painter.drawDualCoordinateImages(g, currentGameState.getAliens(), this);
+		Painter.drawDualCoordinateImage(g, currentGameState.getShip(), this);
+		Painter.drawDualCoordinateImages(g, currentGameState.getShipMissiles(), this);
+		Painter.drawDualCoordinateImages(g, currentGameState.getAlienMissiles(), this);
 		Painter.drawInt(g, TunableParameters.ScoreDrawLabelText, game.getScore(), 
 				TunableParameters.ScoreDrawXCoordinate, TunableParameters.ScoreDrawYCoordinate);
 		Painter.drawInt(g, TunableParameters.ExhaustDrawLabelText, game.getExhaust(), 

@@ -13,6 +13,10 @@ public abstract class DualCoordinateImage {
 		this.y = y;
 	}
 	
+	public DualCoordinateImage(DualCoordinateImage source) {
+		this(source.image, source.x, source.y);
+	}
+	
 	public BufferedImage getImage() {
 		return image;
 	}

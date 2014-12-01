@@ -12,7 +12,7 @@ public class LevelCreator {
 	private static final int AlienWidthBufferFactor = 2;
 
 	public static AlienHorde getAliens(int screenWidth, int screenHeight) {
-		List<Alien> aliens = new ArrayList<Alien>();
+		ArrayList<Alien> aliens = new ArrayList<Alien>();
 		BufferedImage alienImage = Factory.getImageHandler().getAlien();
 		int height = alienImage.getHeight();
 		int width = alienImage.getWidth();
