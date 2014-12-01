@@ -31,6 +31,7 @@ public class TunableParameters {
 	public static String PausedText = "Paused - press spacebar to play";
 	public static int PausedXCoordinate = 250;
 	public static int PausedYCoordinate = 300;
+	public static int TargetFPS = 45;
 	
 	public static int ScreenWidth = 800;
 	public static int ScreenHeight = 600;

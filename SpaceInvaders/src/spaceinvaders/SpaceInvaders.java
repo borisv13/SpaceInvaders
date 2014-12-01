@@ -16,17 +16,21 @@ public class SpaceInvaders implements Runnable {
 	
 	@Override
 	public void run() {
+		long now = 0;
+		long last = 0;
+		int fps = TunableParameters.TargetFPS;
+		long framePeriodNS = 1000000000/fps; 
+		
 		while(true) {
-			try {				
-				Thread.sleep(17);				
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			if(this.gameFrame.run()) {
-				gameFrame.dispose();
-				gameFrame = new GameFrame();
-			}
-			
+			now = System.nanoTime();
+			if (now-last >= framePeriodNS)
+			{
+				last = now;
+				if(this.gameFrame.run()) {
+					gameFrame.dispose();
+					gameFrame = new GameFrame();
+				}				
+			}						
 		}
 	}
 }
