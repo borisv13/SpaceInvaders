@@ -89,8 +89,8 @@ public class GamePanel extends Panel {
 	}
 	
 	public boolean run() {
-		boolean gameOver = game.run();
-		repaint();
+		boolean gameOver = game.run(); // update
+		repaint(); // render
 		return gameOver;
 	}
 }

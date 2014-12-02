@@ -26,7 +26,8 @@ public class GameFrame extends Frame {
 		});
 	}
 	
-	public boolean run() {
+	public boolean run()
+    {
 		return gamePanel.run();
 	}
 }
