@@ -5,90 +5,68 @@ import java.util.Random;
 
 public class GameEngine {
 	
-	private Background background;
-	private Ship ship;
-	private AlienHorde aliens;
-	private List<Missile> shipMissiles = new ArrayList<Missile>();
-	private List<Missile> alienMissiles = new ArrayList<Missile>();
+	private GameState currentGameState;
+	private GameState changingGameState;
 	Random randomGenerator = new Random();
 	private int screenWidth;
 	private int screenHeight;
 	private boolean pause;
 	private int gameScore = 0;
 	private Instrumenter instrument;
-	private Instrumenter paintInstrument;
+	private Instrumenter paintInstrument;	
 	
 	GameEngine(int screenWidth, int screenHeight) {
 		this.screenWidth = screenWidth;
 		this.screenHeight = screenHeight;
-		background = Factory.createBackground(0, 0);
-		ship = Factory.createShip(screenWidth/2, 0, screenWidth);
-		ship.setY(screenHeight - ship.getImage().getHeight()*2);
-		aliens = LevelCreator.getAliens(screenWidth, screenHeight);		
+		this.currentGameState = new GameState(screenWidth, screenHeight);
 		pause = true;
 		this.instrument = new Instrumenter(this, "EngineRun");
 		this.paintInstrument = new Instrumenter(this, "Paint");
 	}
 	
-	public Background getBackground() {
-		return background;
+	public GameState getCurrentGameState() {
+		return currentGameState;
 	}
-	
-	public Ship getShip() {
-		return ship;
-	}
-	
-	public List<Alien> getAliens() {
-		return aliens.getAliens();
-	}
-	
-	public List<Missile> getShipMissiles() {
-		return shipMissiles;
-	}
-	
-	public List<Missile> getAlienMissiles() {
-		return alienMissiles;
-	}
-	
+		
 	private List<GameMoveableObject> getMoveableObjects() {
 		List<GameMoveableObject> moveableObjects = new ArrayList<GameMoveableObject>();
-		moveableObjects.add(ship);
-		moveableObjects.add(background);
-		moveableObjects.add(aliens);
-		moveableObjects.addAll(alienMissiles);
-		moveableObjects.addAll(shipMissiles);
+		moveableObjects.add(changingGameState.getShip());
+		moveableObjects.add(changingGameState.getBackground());
+		moveableObjects.add(changingGameState.getAlienHorde());
+		moveableObjects.addAll(changingGameState.getAlienMissiles());
+		moveableObjects.addAll(changingGameState.getShipMissiles());
 		return moveableObjects;
 	}
 
-	void keyLeftDown() {
+	public synchronized void keyLeftDown() {
 		if(processingOn()) {
-			ship.startMovingLeft();
+			currentGameState.getShip().startMovingLeft();
 		}
 	}
 	
-	void keyLeftUp() {
+	public synchronized void keyLeftUp() {
 		if(processingOn()) {
-			ship.stopMovingLeft();
+			currentGameState.getShip().stopMovingLeft();
 		}
 	}
 	
-	void keyRightDown() {
+	public synchronized void keyRightDown() {
 		if(processingOn()) {
-			ship.startMovingRight();
+			currentGameState.getShip().startMovingRight();
 		}
 	}
 	
-	void keyRightUp() {
+	public synchronized void keyRightUp() {
 		if(processingOn()) {
-			ship.stopMovingRight();
+			currentGameState.getShip().stopMovingRight();
 		}
 	}
 	
-	void keyUpDown() {
+	public synchronized void keyUpDown() {
 		if(processingOn()) {
-			Missile newMissile = ship.fireMissile();
+			Missile newMissile = currentGameState.getShip().fireMissile();
 			if(newMissile != null) {
-				this.shipMissiles.add(newMissile);
+				currentGameState.getShipMissiles().add(newMissile);
 			}
 		}
 	}
@@ -120,50 +98,53 @@ public class GameEngine {
 	}
 	
 	private void conditionallyAddMissile() {
-		Missile newMissile = aliens.randomlyGenerateMissiles();
+		Missile newMissile = changingGameState.getAlienHorde().randomlyGenerateMissiles();
 		if(newMissile != null) {
-			alienMissiles.add(newMissile);
+			changingGameState.getAlienMissiles().add(newMissile);
 		}
 	}
 	
 	@SuppressWarnings("unchecked")
 	private void checkForKilledAliens() {
-		int numberOfAliens = aliens.getAliens().size();
+		int numberOfAliens = changingGameState.getAliens().size();
 		List<List<? extends DualCoordinateImage>> listOfListOfImages = 
-			CollisionDetector.detectCollisionsAndRemoveTwoListsOfImages(getAliens(), shipMissiles);
-		aliens.setAliens((List<Alien>) listOfListOfImages.get(0));
-		shipMissiles = (List<Missile>) listOfListOfImages.get(1);
-		int numberOfAliensKilled = numberOfAliens - getAliens().size();
+			CollisionDetector.detectCollisionsAndRemoveTwoListsOfImages(changingGameState.getAliens(), changingGameState.getShipMissiles());
+		changingGameState.getAlienHorde().setAliens((ArrayList<Alien>) listOfListOfImages.get(0));
+		changingGameState.setShipMissiles((List<Missile>) listOfListOfImages.get(1));
+		int numberOfAliensKilled = numberOfAliens - changingGameState.getAliens().size();
 		this.incrementScore(TunableParameters.AlienScore * numberOfAliensKilled);
 	}
 	
 	@SuppressWarnings("unchecked")
-	synchronized boolean run() {		
+	public synchronized boolean run() {		
+		instrument.startFrame();
+		this.changingGameState = new GameState(this.currentGameState);
+		boolean isGameOver = false;
 		if(processingOn()) {
-			instrument.startFrame();
 			moveObjects();
-			ship.regenerate();
+			changingGameState.getShip().regenerate();
 			checkForKilledAliens();
 			conditionallyAddMissile();
-			shipMissiles = (List<Missile>) CollisionDetector.checkIfInScreen(shipMissiles, screenWidth, screenHeight);
-			alienMissiles = (List<Missile>) CollisionDetector.checkIfInScreen(alienMissiles, screenWidth, screenHeight);
+			changingGameState.setShipMissiles((List<Missile>) CollisionDetector.checkIfInScreen(changingGameState.getShipMissiles(), screenWidth, screenHeight));
+			changingGameState.setAlienMissiles((List<Missile>) CollisionDetector.checkIfInScreen(changingGameState.getAlienMissiles(), screenWidth, screenHeight));
 			
-			instrument.endFrame();
-			return gameOver();
+			isGameOver = gameOver();
 		}
-		return false;
+		this.currentGameState = changingGameState;
+		instrument.endFrame();
+		return isGameOver;
 	}
 	
 	private boolean gameOver() {
 		boolean gameOver = false;
-		if(aliens.getAliens().size() == 0) {
+		if(changingGameState.getAliens().size() == 0) {
 			gameOver = true;
 		}
 		if(!gameOver) {
-			gameOver = CollisionDetector.checkIfImageCollidesWithListOfImages(ship, getAliens());
+			gameOver = CollisionDetector.checkIfImageCollidesWithListOfImages(changingGameState.getShip(), changingGameState.getAliens());
 		}
 		if(!gameOver) {
-			gameOver = CollisionDetector.checkIfImageCollidesWithListOfImages(ship, alienMissiles);
+			gameOver = CollisionDetector.checkIfImageCollidesWithListOfImages(changingGameState.getShip(), changingGameState.getAlienMissiles());
 		}
 		
 		return gameOver;
@@ -177,7 +158,7 @@ public class GameEngine {
 		paintInstrument.endFrame();
 	}
 	
-	private boolean processingOn() {
+	public boolean processingOn() {
 		return !pause;
 	}
 	
@@ -186,6 +167,6 @@ public class GameEngine {
 	}
 	
 	public int getExhaust() {
-		return ship.getExhaust();
+		return currentGameState.getShip().getExhaust();
 	}
 }

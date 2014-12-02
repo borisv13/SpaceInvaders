@@ -1,7 +1,9 @@
 package spaceinvaders;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Panel;
+import java.io.ObjectInputStream.GetField;
 import java.util.List;
 
 
@@ -25,6 +27,17 @@ public class Painter{
 	
 	public static void drawInt(Graphics g, String string, int score, int x, int y) {
 		g.setColor(Color.CYAN);
+		Font prevFont = g.getFont();
+		g.setFont(prevFont.deriveFont(12f));
 		g.drawString(string + ": " + score, x, y);
+		g.setFont(prevFont);				
+	}
+	
+	public static void drawMessage(Graphics g, String string, int x, int y) {
+		g.setColor(Color.RED);
+		Font prevFont = g.getFont();
+		g.setFont(prevFont.deriveFont(24f));
+		g.drawString(string, x, y);
+		g.setFont(prevFont);		
 	}
 }

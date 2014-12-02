@@ -34,9 +34,9 @@ public class Instrumenter {
 				System.out.printf(
 						"Frame Type,%s,Num Aliens,%d,Num Alien Missiles,%d,Num Ship Missiles,%d,AVG Frame Duration in MS,%d,Num Frames,%d,FPS,%d", 
 						this.frameType,
-						engine.getAliens().size(), 
-						engine.getAlienMissiles().size(), 
-						engine.getShipMissiles().size(), 
+						engine.getCurrentGameState().getAliens().size(), 
+						engine.getCurrentGameState().getAlienMissiles().size(), 
+						engine.getCurrentGameState().getShipMissiles().size(), 
 						averageDurationNS/nanoSecondsPerSecond,
 						frameCount,
 						currentFPS);

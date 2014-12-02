@@ -8,6 +8,10 @@ public class Background extends DualCoordinateImage implements GameMoveableObjec
 		super(image, initialX, initialY);
 	}
 	
+	Background(Background source) {
+		super(source);
+	}
+	
 	public void move() {
 		y -= TunableParameters.BackgroundSpeed;
 		if(y <= -image.getHeight())

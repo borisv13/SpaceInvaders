@@ -5,17 +5,28 @@ import java.awt.image.BufferedImage;
 public class Ship extends DualCoordinateImage implements GameMoveableObject{
 
 	private int deltaX;
-	private int shipSpeed = TunableParameters.ShipSpeed;
+	private int shipSpeed;
 	private int limitX;
-	private int maximumExhaust = TunableParameters.ShipExhaust;
+	private int maximumExhaust;
 	private int exhaust;
 	
 	
 	Ship(BufferedImage image, int x, int y, int screenWidth) {
 		super(image, x, y);
 		this.limitX = screenWidth - image.getWidth() - 10;  // Need the 10 to keep the wings on screen..not sure why yet
-		deltaX = 0;
-		exhaust = maximumExhaust;
+		this.shipSpeed = TunableParameters.ShipSpeed;
+		this.deltaX = 0;
+		this.maximumExhaust = TunableParameters.ShipExhaust;
+		this.exhaust = maximumExhaust;
+	}
+	
+	Ship(Ship source) {
+		super(source);
+		this.limitX = source.limitX;
+		this.shipSpeed = source.shipSpeed;
+		this.deltaX = source.deltaX;
+		this.maximumExhaust = source.maximumExhaust;
+		this.exhaust = source.exhaust;
 	}
 	
 	public void startMovingLeft() {
