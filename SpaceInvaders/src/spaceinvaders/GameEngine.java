@@ -116,9 +116,9 @@ public class GameEngine {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public synchronized boolean run() {		
+	public boolean run() {		
 		instrument.startFrame();
-		this.changingGameState = new GameState(this.currentGameState);
+		cloneGameState();
 		boolean isGameOver = false;
 		if(processingOn()) {
 			moveObjects();
@@ -135,6 +135,9 @@ public class GameEngine {
 		return isGameOver;
 	}
 	
+	private synchronized void cloneGameState() {
+		this.changingGameState = new GameState(this.currentGameState);
+	}
 	private boolean gameOver() {
 		boolean gameOver = false;
 		if(changingGameState.getAliens().size() == 0) {
