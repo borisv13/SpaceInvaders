@@ -32,6 +32,7 @@ public class TunableParameters {
 	public static int PausedXCoordinate = 250;
 	public static int PausedYCoordinate = 300;
 	public static int TargetFPS = 45;
+	public static int SplashScreenDurationMS = 15000;
 	
 	public static int ScreenWidth = 800;
 	public static int ScreenHeight = 600;

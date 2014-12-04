@@ -4,15 +4,9 @@ public class SpaceInvaders implements Runnable {
 
 	GameFrame gameFrame;
 	
-	public static void main(String[] args) {
-		
-		// Set Variable for the SplashScreen
-        SplashScreen splash = new SplashScreen(15000);
-
-        // Normally, we'd call splash.showSplash() and get on 
-        // with the program. But, since this is only a test...
-        //splash.showSplashAndExit();
-        splash.showSplash();
+	public static void main(String[] args) {	
+        SplashScreen splash = new SplashScreen();
+        splash.showSplashModal(TunableParameters.SplashScreenDurationMS);
 		
 		SpaceInvaders spaceInvaders = new SpaceInvaders();
 		spaceInvaders.init();
