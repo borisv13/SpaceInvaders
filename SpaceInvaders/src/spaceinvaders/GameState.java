@@ -11,14 +11,14 @@ public class GameState {
 	private List<Missile> alienMissiles = new ArrayList<Missile>();
 	private Ship ship;
 
-	public GameState(int screenWidth, int screenHeight) {
+	GameState(int screenWidth, int screenHeight) {
 		background = Factory.createBackground(0, 0);
 		aliens = LevelCreator.getAliens(screenWidth, screenHeight);
 		ship = Factory.createShip(screenWidth/2, 0, screenWidth);
 		ship.setY(screenHeight - ship.getImage().getHeight()*2);
 	}
 	
-	public GameState(GameState source) {
+	GameState(GameState source) {
 		this.background = new Background(source.background);
 		this.aliens = new AlienHorde(source.aliens);
 		for(Missile shipMissile: source.shipMissiles){
@@ -30,35 +30,73 @@ public class GameState {
 		this.ship = source.ship;
 	}
 	
-	public Background getBackground() {
+	Background getBackground() {
 		return background;
 	}
 	
-	public Ship getShip() {
+	Ship getShip() {
 		return ship;
 	}
 	
-	public AlienHorde getAlienHorde() {
+	AlienHorde getAlienHorde() {
 		return aliens;
 	}
 	
-	public List<Alien> getAliens() {
+	List<Alien> getAliens() {
 		return aliens.getAliens();
 	}
 	
-	public List<Missile> getShipMissiles() {
+	void setAliens(ArrayList<Alien> alienList) {
+		this.aliens.setAliens(alienList);
+	}
+	
+	List<Missile> getShipMissiles() {
 		return shipMissiles;
 	}
 	
-	public void setShipMissiles(List<Missile> newList) {
+	void setShipMissiles(List<Missile> newList) {
 		this.shipMissiles = newList;
 	}
 
-	public List<Missile> getAlienMissiles() {
+	List<Missile> getAlienMissiles() {
 		return alienMissiles;
 	}
 	
-	public void setAlienMissiles(List<Missile> newList) {
+	void setAlienMissiles(List<Missile> newList) {
 		this.alienMissiles = newList;
+	}
+	
+	void regenerateShipWeapon() {
+		this.ship.regenerate();
+	}
+	
+	void randomlyGenerateAlienMissile() {
+		Missile newMissile = this.aliens.randomlyGenerateMissiles();
+		if(newMissile != null) {
+			this.alienMissiles.add(newMissile);
+		}
+	}	
+	
+	void startMovingLeft() {
+		this.ship.startMovingLeft();
+	}
+
+	void stopMovingLeft() {
+		this.ship.stopMovingLeft();
+	}
+
+	void startMovingRight() {
+		this.ship.startMovingRight();
+	}
+
+	void stopMovingRight() {
+		this.ship.stopMovingRight();
+	}
+	
+	void fireShipMissile() {
+		Missile newMissile = ship.fireMissile();
+		if(newMissile != null) {
+			shipMissiles.add(newMissile);
+		}
 	}
 }

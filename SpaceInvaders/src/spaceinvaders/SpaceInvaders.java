@@ -22,7 +22,8 @@ public class SpaceInvaders implements Runnable {
 		long now = 0;
 		long last = 0;
 		int fps = TunableParameters.TargetFPS;
-		long framePeriodNS = 1000000000/fps; 
+		long framePeriodNS = 1000000000/fps;
+		long nextFrameNS;
 		long timeToSleepMS;
 		boolean gameOver;
 		
@@ -38,11 +39,12 @@ public class SpaceInvaders implements Runnable {
 					gameFrame = new GameFrame();					
 				}
 				
-				// Next we sleep a portion of the time until the next scheduled frame run 
-				// to give the CPU a break
-				// However because of non-determinism in the sleep function we don't get
-				// closer than 8 ms to next run time.
-				timeToSleepMS = (long) Math.floor((last + framePeriodNS - System.nanoTime()) / 1000000) - 8;
+				// Next we sleep a portion of the time until 
+				// the next scheduled frame run to give the CPU a break
+				// However because of non-determinism in the sleep function
+				// we don't get closer than 8 ms to next run time.
+				nextFrameNS = last + framePeriodNS;
+				timeToSleepMS = (long) Math.floor((nextFrameNS - System.nanoTime()) / 1000000) - 8;
 				if (timeToSleepMS > 0) {
 					try {
 						Thread.sleep(timeToSleepMS);
